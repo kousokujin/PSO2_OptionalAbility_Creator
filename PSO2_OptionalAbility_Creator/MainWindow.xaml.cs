@@ -86,51 +86,64 @@ namespace PSO2_OptionalAbility_Creator
             OP_ListBox.ItemsSource = filterOP;
         }
 
-        private void OP_ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Add_OP_Button_Click(object sender, RoutedEventArgs e)
         {
-            var lb = sender as ListBox;
+            var selectOP = OP_ListBox.SelectedItem;
 
-            if (lb != null && lb.SelectedItem != null)
+            if(selectOP is op_stct2)
             {
-                DragDrop.DoDragDrop(lb, lb.SelectedItem, DragDropEffects.Move);
-            }
-        }
+                op_stct2 op = (op_stct2)selectOP;
+                targetOPList.Add(op);
 
-        private void TargetOP_DragOver(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(typeof(ListBoxItem)))
-            {
-                e.Effects = DragDropEffects.Move;
-            }
-        }
-
-        private void TargetOP_ListBox_Drop(object sender, DragEventArgs e)
-        {
-            var lb = sender as ListBox;
-            foreach(var x in lb.Items)
-            {
-                Console.WriteLine(x);
-            }
-
-            var item = e.Data.GetData(typeof(op_stct2));
-            Console.WriteLine((op_stct2)item);
-
-            if(item != null && item is op_stct2)
-            {
-                op_stct2 op_item = (op_stct2)item;
-                //targetOPList.Add(op_item);
-
-                //var isDup = OP_CompositionEngine.checkOP(targetOPList.ToList());
-
-                /*
-                if(isDup.Count() != 0)
+                var isDuped = OP_CompositionEngine.checkOP(targetOPList.ToList());
+                if(isDuped.Count != 0)
                 {
-                    targetOPList.RemoveAt(targetOPList.Count() - 1);
+                    foreach(var op_d in isDuped)
+                    {
+                        targetOPList.Remove(op_d);
+                    }
+                    targetOPList.Add(op);
                 }
-                */
-                //TargetOP_ListBox.ItemsSource = targetOPList;
+
+                if(targetOPList.Count == 8)
+                {
+                    Add_OP_Button.IsEnabled = false;
+                }
+
+                Remove_OP_Button.IsEnabled = true;
+            }
+
+            TargetOP_ListBox.ItemsSource = targetOPList;
+        }
+
+        private void Remove_OP_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var selectOP = TargetOP_ListBox.SelectedItem;
+
+            if(selectOP is op_stct2)
+            {
+                op_stct2 op = (op_stct2)selectOP;
+                targetOPList.Remove(op);
+
+                if(targetOPList.Count == 0)
+                {
+                    Remove_OP_Button.IsEnabled = false;
+                }
+                Add_OP_Button.IsEnabled = true;
 
             }
+
+            TargetOP_ListBox.ItemsSource = targetOPList;
+
+        }
+
+        private void AllRemove_Click(object sender, RoutedEventArgs e)
+        {
+            targetOPList.Clear();
+            TargetOP_ListBox.ItemsSource = targetOPList;
+            Add_OP_Button.IsEnabled = true;
+            Remove_OP_Button.IsEnabled = false;
+
         }
     }
 }

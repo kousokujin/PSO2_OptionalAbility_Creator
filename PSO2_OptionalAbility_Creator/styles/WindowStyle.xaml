@@ -62,22 +62,13 @@
         </Setter>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
-    
-    <!--スクロールバー-->
-    <!--
-    <SolidColorBrush x:Key="ScrollBarColorBrush" Color="#FF4d4d4d" />
-    <SolidColorBrush x:Key="ScrollBarTrackBrush" Color="#FF2E2E2E" />
-    <SolidColorBrush x:Key="ScrollBarHilightBrush" Color="#FF4d4d4d" />
-    <SolidColorBrush x:Key="ScrollBarPressedBrush" Color="#FF1A1A1A" />
-    -->
+
 
     <Style TargetType="ListBox">
         <Setter Property="Background" Value="#FF252526"/>
         <Setter Property="Foreground" Value="#FFFFFF"/>
     </Style>
-
-    <!--<Style x:Key="OP_ListItem" TargetType="{x:Type ListBoxItem}">-->
-    <Style TargetType="ListBoxItem">    
+    <Style TargetType="ListBoxItem">
         <Setter Property="Template">
             <Setter.Value>
 
@@ -95,13 +86,19 @@
                                             Value="#FF47474a" />
                         </Trigger>
 
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background"
+                                            Value="#FF5c5c5e" />
+
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
 
-                 </ControlTemplate>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <Style TargetType="TextBox">
         <Setter Property="Background" Value="#FF252526"/>
         <Setter Property="Foreground" Value="#FFFFFF"/>
@@ -110,5 +107,53 @@
     <Style TargetType="Label">
         <Setter Property="Foreground" Value="#FFFFFF"/>
     </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="Foreground" Value="#CCFFFFFF"/>
+        <!--
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="HoverButtonBorder" BorderThickness="1" BorderBrush="#CCFFFFFF" Background="#FF2D2D30">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverButtonBoarder" Property="BorderBrush" Value="#FFFFFFFF" />
+                            <Setter TargetName="HoverButtonBoarder" Property="Background" Value="#FF545454" />
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        -->
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="HoverButtonBorder" BorderThickness="1" BorderBrush="#CCFFFFFF" Background="#FF2D2D30">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- マウスオーバー -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverButtonBorder" Property="BorderBrush" Value="#FFFFFFFF" />
+                            <Setter TargetName="HoverButtonBorder" Property="Background" Value="#FF545454"  />
+                            <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="HoverButtonBorder" Property="BorderBrush" Value="#55FFFFFF" />
+                            <Setter TargetName="HoverButtonBorder" Property="Background" Value="#FF2D2D30"  />
+                            <Setter Property="Foreground" Value="#55FFFFFF" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
 </ResourceDictionary>
