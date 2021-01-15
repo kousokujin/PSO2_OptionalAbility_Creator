@@ -1,0 +1,42 @@
+﻿<Window x:Name="MainWindow1" x:Class="PSO2_OptionalAbility_Creator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSO2_OptionalAbility_Creator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None"
+        Background="#FF2D2D30" Foreground="#FF252526">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WindowStyle.xaml"/>
+                <ResourceDictionary Source="/ScrollBar.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40"
+                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Border BorderBrush="Gray"
+            BorderThickness="1" >
+        <Grid>
+            <StackPanel Orientation="Horizontal" Margin="0,5,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top" Height="40" Width="106">
+                <Button x:Name="MiniWindowButton" Content="0" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="30" Click="MiniWindowButton_Click" />
+                <Button x:Name="MaxWindowButton" Content="1" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="30" Click="MaxWindowButton_Click" />
+                <Button x:Name="CloseButton" Content="r" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="30" Click="CloseButton_Click" />
+            </StackPanel>
+            <Label x:Name="TitleLabel" Content="PSO2 Optional Ability Creator" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="20" Height="40"/>
+            <ListBox x:Name="OP_ListBox" ItemsSource="{Binding AllOPLists}" HorizontalAlignment="Left" Margin="10,94,0,5" Width="150" VerticalContentAlignment="Stretch"  Background="#FF252526" AllowDrop="True" Focusable="False" BorderThickness="1,0,1,1" PreviewMouseLeftButtonDown="OP_ListBox_PreviewMouseLeftButtonDown"/>
+            <ListBox x:Name="TargetOP_ListBox" HorizontalAlignment="Left" Height="204" Margin="178,71,0,0" VerticalAlignment="Top" Width="150" Drop="TargetOP_ListBox_Drop" DragOver="TargetOP_DragOver" AllowDrop="True" />
+            <Label Content="特殊能力リスト" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="150"/>
+            <Label Content="完成OP" HorizontalAlignment="Left" Margin="178,45,0,0" VerticalAlignment="Top" Width="150"/>
+            <TextBox x:Name="OPSarchBox" HorizontalAlignment="Left" Height="23" Margin="10,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" BorderThickness="1" TextChanged="OPSarchBox_TextChanged"/>
+        </Grid>
+
+    </Border>
+</Window>
