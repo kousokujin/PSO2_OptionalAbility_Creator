@@ -71,7 +71,7 @@ namespace PSO2_OptionalAbility_Creator
         }
     }
 
-    struct OP_Recipe2
+    public struct OP_Recipe2
     {
         public op_stct2 name;  //完成品
         public List<op_stct2> materials;   //必要な素材

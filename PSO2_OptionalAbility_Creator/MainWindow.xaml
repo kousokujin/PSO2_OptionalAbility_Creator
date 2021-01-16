@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSO2_OptionalAbility_Creator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None"
+        Title="MainWindow" Height="669.333" Width="1127" WindowStyle="None"
         Background="#FF2D2D30" Foreground="#FF252526">
     <Window.Resources>
         <ResourceDictionary>
@@ -32,7 +32,7 @@
                 <Button x:Name="CloseButton" Content="r" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="30" Click="CloseButton_Click" />
             </StackPanel>
             <Label x:Name="TitleLabel" Content="PSO2 Optional Ability Creator" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="20" Height="40"/>
-            <ListBox x:Name="OP_ListBox" HorizontalAlignment="Left" Margin="10,94,0,5" Width="150" VerticalContentAlignment="Stretch"  Background="#FF252526" BorderThickness="1,0,1,1" Focusable="False" SelectionMode="Single"/>
+            <ListBox x:Name="OP_ListBox" HorizontalAlignment="Left" Margin="10,94,0,10" Width="150" VerticalContentAlignment="Stretch"  Background="#FF252526" BorderThickness="1,0,1,1" Focusable="False" SelectionMode="Single"/>
             <ListBox x:Name="TargetOP_ListBox" HorizontalAlignment="Left" Height="169" Margin="232,71,0,0" VerticalAlignment="Top" Width="150"  AllowDrop="False" SelectionMode="Single" />
             <Label Content="特殊能力リスト" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="150"/>
             <Label Content="完成OP" HorizontalAlignment="Left" Margin="232,45,0,0" VerticalAlignment="Top" Width="150"/>
@@ -62,10 +62,18 @@
                 <ComboBoxItem>+18%</ComboBoxItem>
                 <ComboBoxItem>打撃力系</ComboBoxItem>
                 <ComboBoxItem>射撃力系</ComboBoxItem>
-                <ComboBoxItem>法撃力京</ComboBoxItem>
+                <ComboBoxItem>法撃力系</ComboBoxItem>
                 <ComboBoxItem>HP/PP系</ComboBoxItem>
                 <ComboBoxItem>特殊系</ComboBoxItem>
             </ComboBox>
+            <Border Margin="387,71,10,10" BorderThickness="1" BorderBrush="White" Background="#FF252526" >
+                <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Viewbox Height="Auto" Width="Auto">
+                        <Frame Content="Frame" Source="OP_TreePage.xaml" Width="Auto" Height="Auto"/>
+                    </Viewbox>
+                </ScrollViewer>
+            </Border>
+            <Label Content="設計図" HorizontalAlignment="Left" Margin="387,45,0,0" VerticalAlignment="Top" Width="125" Padding="0,5,5,5"/>
         </Grid>
 
     </Border>

@@ -67,6 +67,12 @@
     <Compile Include="MemorySQL_Load.cs" />
     <Compile Include="OPData_Memory.cs" />
     <Compile Include="OP_CompositionEngine.cs" />
+    <Compile Include="OP_MaterialBox.xaml.cs">
+      <DependentUpon>OP_MaterialBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OP_TreePage.xaml.cs">
+      <DependentUpon>OP_TreePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RecipeDataContainer.cs" />
     <Compile Include="RecipeData_Memory.cs" />
     <Compile Include="tools.cs" />
@@ -82,7 +88,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OP_MaterialBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OP_TreePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="styles\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="styles\OP_MaterialBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
