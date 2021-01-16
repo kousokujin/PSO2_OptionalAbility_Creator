@@ -177,7 +177,7 @@ namespace PSO2_OptionalAbility_Creator
         /// <returns>
         /// 合成成功確率,必要な素材
         /// </returns>
-        public material SerchOP_materialBodys(op_stct2[] target, int percent_plus = 0)
+        static public material SerchOP_materialBodys(op_stct2[] target, int percent_plus = 0)
         {
             List<List<op_stct2>> output_material_bodys = new List<List<op_stct2>>();
 
@@ -412,7 +412,7 @@ namespace PSO2_OptionalAbility_Creator
         }
 
 
-        public material SerchOP(op_stct2[] target, int percent_plus = 0)
+        static public material SerchOP(op_stct2[] target, int percent_plus = 0)
         {
 
             material output_mat = SerchOP_materialBodys(target, percent_plus);
@@ -456,7 +456,7 @@ namespace PSO2_OptionalAbility_Creator
     }
 
 
-    class material
+    public class material
     {
         public List<List<op_stct2>> material_op; //素材op
         public List<material> material_childs;

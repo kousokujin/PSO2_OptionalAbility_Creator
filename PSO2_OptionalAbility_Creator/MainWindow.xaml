@@ -69,11 +69,12 @@
             <Border Margin="387,71,10,10" BorderThickness="1" BorderBrush="White" Background="#FF252526" >
                 <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Viewbox Height="Auto" Width="Auto">
-                        <Frame Content="Frame" Source="OP_TreePage.xaml" Width="Auto" Height="Auto"/>
+                        <Frame x:Name="TreeFrame" Content="Frame" Source="OP_TreePage.xaml" Width="Auto" Height="Auto"/>
                     </Viewbox>
                 </ScrollViewer>
             </Border>
             <Label Content="設計図" HorizontalAlignment="Left" Margin="387,45,0,0" VerticalAlignment="Top" Width="125" Padding="0,5,5,5"/>
+            <Button x:Name="StartButton" Content="作成" HorizontalAlignment="Left" Height="62" Margin="165,385,0,0" VerticalAlignment="Top" Width="217" FontSize="40" Click="StartButton_Click"/>
         </Grid>
 
     </Border>

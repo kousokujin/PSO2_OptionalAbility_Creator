@@ -145,5 +145,17 @@ namespace PSO2_OptionalAbility_Creator
             Remove_OP_Button.IsEnabled = false;
 
         }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            material m = OP_CompositionEngine.SerchOP(targetOPList.ToArray());
+            var tree_page = TreeFrame.Content;
+
+            if(tree_page is OP_TreePage)
+            {
+                var page = (OP_TreePage)tree_page;
+                page.ShowMaterialTree(m);
+            }
+        }
     }
 }

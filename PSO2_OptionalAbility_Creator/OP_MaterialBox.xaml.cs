@@ -73,7 +73,7 @@ namespace PSO2_OptionalAbility_Creator
 
                 if (percent >= 1.0)
                 {
-                    return "#FF08d41d";
+                       return "#FF08d41d";
                 }
 
                 if (percent < 1.0 && percent >= 0.8)
