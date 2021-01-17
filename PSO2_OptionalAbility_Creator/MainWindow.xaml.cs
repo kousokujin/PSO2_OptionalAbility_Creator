@@ -22,13 +22,19 @@ namespace PSO2_OptionalAbility_Creator
     public partial class MainWindow : Window
     {
         OP_CompositionEngine engine;
-        private ObservableCollection<op_stct2> AllOPLists;
-        private ObservableCollection<op_stct2> targetOPList;
+        //private ObservableCollection<op_stct2> AllOPLists;
+        //private ObservableCollection<op_stct2> targetOPList;
+        MainWindowData ContextData;
 
         public MainWindow()
         {
             InitializeComponent();
+
             engine = new OP_CompositionEngine();
+            ContextData = new MainWindowData();
+            DataContext = ContextData;
+
+            /*
             AllOPLists = new ObservableCollection<op_stct2>();
             targetOPList = new ObservableCollection<op_stct2>();
 
@@ -37,9 +43,16 @@ namespace PSO2_OptionalAbility_Creator
             {
                 AllOPLists.Add(o);
             }
+            */
 
-            OP_ListBox.ItemsSource = AllOPLists;
-            //TargetOP_ListBox.ItemsSource = targetOPList;
+            OP_ListBox.ItemsSource = ContextData.AllOPLists;
+            TargetOP_ListBox.ItemsSource = ContextData.targetOPList;
+
+            CampaignOP_Percent_Combobox.ItemsSource = ContextData.CampaignAdd;
+            CampaignOP_Percent_Combobox.SelectedIndex = 0;
+
+            OP_ParcentAdd_ComboBox.ItemsSource = ContextData.ItemAdd;
+            OP_ParcentAdd_ComboBox.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -82,7 +95,7 @@ namespace PSO2_OptionalAbility_Creator
         //OP検索ボックス
         private void OPSarchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var filterOP = AllOPLists.Where(x => x.jp_name.Contains(OPSarchBox.Text)).ToList();
+            var filterOP = ContextData.AllOPLists.Where(x => x.jp_name.Contains(OPSarchBox.Text)).ToList();
             OP_ListBox.ItemsSource = filterOP;
         }
 
@@ -93,19 +106,19 @@ namespace PSO2_OptionalAbility_Creator
             if(selectOP is op_stct2)
             {
                 op_stct2 op = (op_stct2)selectOP;
-                targetOPList.Add(op);
+                ContextData.targetOPList.Add(op);
 
-                var isDuped = OP_CompositionEngine.checkOP(targetOPList.ToList());
+                var isDuped = OP_CompositionEngine.checkOP(ContextData.targetOPList.ToList());
                 if(isDuped.Count != 0)
                 {
                     foreach(var op_d in isDuped)
                     {
-                        targetOPList.Remove(op_d);
+                        ContextData.targetOPList.Remove(op_d);
                     }
-                    targetOPList.Add(op);
+                    ContextData.targetOPList.Add(op);
                 }
 
-                if(targetOPList.Count == 8)
+                if(ContextData.targetOPList.Count == 8)
                 {
                     Add_OP_Button.IsEnabled = false;
                 }
@@ -113,7 +126,7 @@ namespace PSO2_OptionalAbility_Creator
                 Remove_OP_Button.IsEnabled = true;
             }
 
-            TargetOP_ListBox.ItemsSource = targetOPList;
+            TargetOP_ListBox.ItemsSource = ContextData.targetOPList;
         }
 
         private void Remove_OP_Button_Click(object sender, RoutedEventArgs e)
@@ -123,9 +136,9 @@ namespace PSO2_OptionalAbility_Creator
             if(selectOP is op_stct2)
             {
                 op_stct2 op = (op_stct2)selectOP;
-                targetOPList.Remove(op);
+                ContextData.targetOPList.Remove(op);
 
-                if(targetOPList.Count == 0)
+                if(ContextData.targetOPList.Count == 0)
                 {
                     Remove_OP_Button.IsEnabled = false;
                 }
@@ -133,14 +146,14 @@ namespace PSO2_OptionalAbility_Creator
 
             }
 
-            TargetOP_ListBox.ItemsSource = targetOPList;
+            TargetOP_ListBox.ItemsSource = ContextData.targetOPList;
 
         }
 
         private void AllRemove_Click(object sender, RoutedEventArgs e)
         {
-            targetOPList.Clear();
-            TargetOP_ListBox.ItemsSource = targetOPList;
+            ContextData.targetOPList.Clear();
+            TargetOP_ListBox.ItemsSource = ContextData.targetOPList;
             Add_OP_Button.IsEnabled = true;
             Remove_OP_Button.IsEnabled = false;
 
@@ -148,17 +161,175 @@ namespace PSO2_OptionalAbility_Creator
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            material m = OP_CompositionEngine.SerchOP(targetOPList.ToArray());
+            material m = OP_CompositionEngine.SerchOP(ContextData.targetOPList.ToArray());
             var tree_page = TreeFrame.Content;
 
             if(tree_page is OP_TreePage)
             {
                 var page = (OP_TreePage)tree_page;
                 page.ShowMaterialTree(m);
+                //Console.WriteLine("FrameViewBox Width:{0}, Height:{1}", TreeFrame_ViewBox.Width, TreeFrame_ViewBox.Height);
 
-                //TreeFrame_ViewBox.Width = TreeFrameBoader.Width;
+                double edge_X = Width - (TreeFrameBoader.Margin.Left + TreeFrameBoader.Margin.Right);
+                double edge_Y = Height - (TreeFrameBoader.Margin.Top + TreeFrameBoader.Margin.Bottom);
+                TreeFrame_ViewBox.Width = edge_X;
+                TreeFrame_ViewBox.Height = edge_Y;
 
             }
+        }
+
+        //設計図でマウスホイール動いたら
+        private void ScrollViewer_Wheel(MouseWheelEventArgs e)
+        {
+            ScrollViewer scrollviewer = Tree_Scroll;
+
+            KeyStates key_shiftL = KeyStateFilter(Keyboard.GetKeyStates(Key.LeftShift));
+            KeyStates key_shiftR = KeyStateFilter(Keyboard.GetKeyStates(Key.RightShift));
+
+            if (key_shiftL == KeyStates.Down || key_shiftR == KeyStates.Down)
+            {
+                if (e.Delta > 0)
+                {
+                    scrollviewer.LineLeft();
+                }
+                else
+                {
+                    scrollviewer.LineRight();
+                }
+            }
+            else
+            {
+                if (e.Delta > 0)
+                {
+                    scrollviewer.LineUp();
+                }
+                else
+                {
+                    scrollviewer.LineDown();
+                }
+            }
+
+            e.Handled = true;
+        }
+
+        private void ViewBoxWheel(MouseWheelEventArgs e)
+        {
+            KeyStates ctrlL = KeyStateFilter(Keyboard.GetKeyStates(Key.LeftCtrl));
+            KeyStates ctrlR = KeyStateFilter(Keyboard.GetKeyStates(Key.RightCtrl));
+
+            if (ctrlL == KeyStates.Down || ctrlR == KeyStates.Down)
+            {
+                if (TreeFrame_ViewBox.Width != double.NaN && TreeFrame_ViewBox.Height != double.NaN)
+                {
+                    /*
+                    double edge_X = Width - (TreeFrameBoader.Margin.Left + TreeFrameBoader.Margin.Right);
+                    double edge_Y = Height - (TreeFrameBoader.Margin.Top + TreeFrameBoader.Margin.Bottom);
+
+                    double tempWidth = TreeFrame_ViewBox.Width;
+                    double tempHeight = TreeFrame_ViewBox.Height;
+                    */
+
+                    double VerticalRate = Tree_Scroll.VerticalOffset / Tree_Scroll.ScrollableHeight;
+                    double HorizontalRate = Tree_Scroll.HorizontalOffset / Tree_Scroll.ScrollableWidth;
+
+                    double rate = TreeFrame.Height / TreeFrame.Width;
+                    if (e.Delta > 0)
+                    {
+                        TreeFrame_ViewBox.Width += 100;
+                        TreeFrame_ViewBox.Height += 100;
+                    }
+                    else
+                    {
+                        TreeFrame_ViewBox.Width -= 100;
+                        TreeFrame_ViewBox.Height -= 100;
+                    }
+
+                    //Tree_Scroll.ScrollToVerticalOffset(VerticalRate * Tree_Scroll.ScrollableWidth);
+                    //Tree_Scroll.ScrollToHorizontalOffset(HorizontalRate * Tree_Scroll.ScrollableHeight);
+                }
+
+            }
+        }
+
+        private KeyStates KeyStateFilter(KeyStates k)
+        {
+            var key_OK = KeyStates.Down | KeyStates.Toggled;
+
+            if(k == key_OK)
+            {
+                return KeyStates.Down;
+            }
+            else
+            {
+                return k;
+            }
+        }
+
+        //Ctrlで拡大縮小
+        private void TreeFrameBoader_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer_Wheel(e);
+            ViewBoxWheel(e);
+            e.Handled = true;
+        }
+    }
+
+    public class MainWindowData
+    {
+        public ObservableCollection<op_stct2> AllOPLists;
+        public ObservableCollection<op_stct2> targetOPList;
+
+        //特殊能力成功率向上アイテム
+        public ObservableCollection<PercentAdd> ItemAdd;
+        //弱体化特殊能力成功率向上
+        public ObservableCollection<PercentAdd> CampaignAdd;
+
+        public MainWindowData()
+        {
+            AllOPLists = new ObservableCollection<op_stct2>();
+            targetOPList = new ObservableCollection<op_stct2>();
+            ItemAdd = new ObservableCollection<PercentAdd>();
+            CampaignAdd = new ObservableCollection<PercentAdd>();
+
+            //OPリスト追加
+            foreach (op_stct2 o in OPDataContainer.GetAllOP())
+            {
+                AllOPLists.Add(o);
+            }
+
+            ItemAdd.Add(new PercentAdd() { addPercent = 0, itemName = "なし" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 5, itemName = "+5%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 10, itemName = "+10%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 20, itemName = "+20%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 30, itemName = "+30%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 40, itemName = "+40%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 45, itemName = "+45%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 50, itemName = "+50%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 55, itemName = "+55%" });
+            ItemAdd.Add(new PercentAdd() { addPercent = 60, itemName = "+60%" });
+
+            CampaignAdd.Add(new PercentAdd() { addPercent = 0, itemName = "なし" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = 5, itemName = "+5%" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = 10, itemName = "+10%" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = 15, itemName = "+15%" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = 18, itemName = "+18%" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = -1, itemName = "打撃力系" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = -2, itemName = "射撃力系" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = -3, itemName = "法撃力系" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = -4, itemName = "HP/PP系" });
+            CampaignAdd.Add(new PercentAdd() { addPercent = -5, itemName = "特殊系" });
+
+        }
+    }
+
+    public class PercentAdd
+    {
+        public int addPercent;
+        public string itemName;
+
+        public override string ToString()
+        {
+            return itemName;
         }
     }
 }

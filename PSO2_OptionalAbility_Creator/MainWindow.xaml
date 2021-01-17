@@ -32,7 +32,13 @@
                 <Button x:Name="CloseButton" Content="r" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="30" Click="CloseButton_Click" />
             </StackPanel>
             <Label x:Name="TitleLabel" Content="PSO2 Optional Ability Creator" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="20" Height="40"/>
-            <ListBox x:Name="OP_ListBox" HorizontalAlignment="Left" Margin="10,94,0,10" Width="150" VerticalContentAlignment="Stretch"  Background="#FF252526" BorderThickness="1,0,1,1" Focusable="False" SelectionMode="Single"/>
+            <ListBox x:Name="OP_ListBox" HorizontalAlignment="Left" Margin="10,94,0,10" Width="150" VerticalContentAlignment="Stretch"  Background="#FF252526" BorderThickness="1,0,1,1"  ItemsSource="{Binding AllOPLists}">
+                <!--<ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <ListBoxItem Content="{Binding}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>-->
+            </ListBox>
             <ListBox x:Name="TargetOP_ListBox" HorizontalAlignment="Left" Height="169" Margin="232,71,0,0" VerticalAlignment="Top" Width="150"  AllowDrop="False" SelectionMode="Single" />
             <Label Content="特殊能力リスト" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="150"/>
             <Label Content="完成OP" HorizontalAlignment="Left" Margin="232,45,0,0" VerticalAlignment="Top" Width="150"/>
@@ -40,7 +46,8 @@
             <Button x:Name="Add_OP_Button" Content="追加&gt;&gt;" HorizontalAlignment="Left" Margin="165,113,0,0" VerticalAlignment="Top" Width="62" Click="Add_OP_Button_Click"/>
             <Button x:Name="Remove_OP_Button" Content="&lt;&lt;削除" HorizontalAlignment="Left" Margin="165,150,0,0" VerticalAlignment="Top" Width="62" Click="Remove_OP_Button_Click" IsEnabled="False"/>
             <Button x:Name="AllRemove" Content="すべて削除" HorizontalAlignment="Left" Margin="165,222,0,0" VerticalAlignment="Top" Width="62" RenderTransformOrigin="-0.36,-0.352" Click="AllRemove_Click"/>
-            <ComboBox x:Name="OP_ParcentAdd_ComboBox" HorizontalAlignment="Left" Margin="165,287,0,0" VerticalAlignment="Top" Width="81">
+            <ComboBox x:Name="OP_ParcentAdd_ComboBox" HorizontalAlignment="Left" Margin="165,287,0,0" VerticalAlignment="Top" Width="81" ItemsSource="{Binding ItemAdd}">
+                <!--
                 <ComboBoxItem IsSelected="True">なし</ComboBoxItem>
                 <ComboBoxItem>+5%</ComboBoxItem>
                 <ComboBoxItem>+10%</ComboBoxItem>
@@ -51,10 +58,12 @@
                 <ComboBoxItem>+50%</ComboBoxItem>
                 <ComboBoxItem>+55%</ComboBoxItem>
                 <ComboBoxItem>+60%</ComboBoxItem>
+                -->
             </ComboBox>
             <Label Content="特殊能力追加成功確率" HorizontalAlignment="Left" Margin="165,260,0,0" VerticalAlignment="Top" Width="150" Height="27" Padding="0,5,5,5"/>
             <Label Content="キャンペーン成功確率" HorizontalAlignment="Left" Margin="165,314,0,0" VerticalAlignment="Top" Width="140" Padding="0,5,5,5"/>
-            <ComboBox x:Name="CampaignOP_Percent_Combobox" HorizontalAlignment="Left" Margin="165,340,0,0" VerticalAlignment="Top" Width="81">
+            <ComboBox x:Name="CampaignOP_Percent_Combobox" HorizontalAlignment="Left" Margin="165,340,0,0" VerticalAlignment="Top" Width="81" ItemsSource="{Binding CampaignAdd}">
+                <!--
                 <ComboBoxItem IsSelected="True">なし</ComboBoxItem>
                 <ComboBoxItem>+5%</ComboBoxItem>
                 <ComboBoxItem>+10%</ComboBoxItem>
@@ -65,12 +74,13 @@
                 <ComboBoxItem>法撃力系</ComboBoxItem>
                 <ComboBoxItem>HP/PP系</ComboBoxItem>
                 <ComboBoxItem>特殊系</ComboBoxItem>
+                -->
             </ComboBox>
-            <Border x:Name="TreeFrameBoader" Margin="387,71,10,10" BorderThickness="1" BorderBrush="White" Background="#FF252526" >
-                <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
-                    <!--<Viewbox x:Name="TreeFrame_ViewBox" Height="Auto" Width="Auto">-->
+            <Border x:Name="TreeFrameBoader" Margin="387,71,10,10" BorderThickness="1" BorderBrush="White" Background="#FF252526" PreviewMouseWheel="TreeFrameBoader_PreviewMouseWheel" >
+                <ScrollViewer x:Name="Tree_Scroll" Margin="0,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                    <Viewbox x:Name="TreeFrame_ViewBox" Height="Auto" Width="Auto">
                         <Frame x:Name="TreeFrame" Content="Frame" Width="Auto" Height="Auto" Source="OP_TreePage.xaml" VerticalContentAlignment="Stretch"/>
-                    <!--</Viewbox>-->
+                    </Viewbox>
                 </ScrollViewer>
             </Border>
             <Label Content="設計図" HorizontalAlignment="Left" Margin="387,45,0,0" VerticalAlignment="Top" Width="125" Padding="0,5,5,5"/>
