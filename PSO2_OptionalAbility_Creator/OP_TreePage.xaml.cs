@@ -24,6 +24,7 @@ namespace PSO2_OptionalAbility_Creator
         int material_slot = 0;
 
         List<OP_MaterialBox> material_boxs;
+        List<Material_StartBox> material_start;
         //ツリーの深さと幅
         List<int> material_levels;
         List<int> showLevel_Temp;
@@ -43,6 +44,7 @@ namespace PSO2_OptionalAbility_Creator
             material_levels = new List<int>();
             showLevel_Temp = new List<int>();
             material_boxs = new List<OP_MaterialBox>();
+            material_start = new List<Material_StartBox>();
             //ShowMaterial(material.Recipes, 0, 0);
         }
 
@@ -61,49 +63,75 @@ namespace PSO2_OptionalAbility_Creator
             material_levels.Clear();
             showLevel_Temp.Clear();
             material_slot = 0;
-            
+
             foreach(OP_MaterialBox m in material_boxs)
             {
                 m.Visibility = Visibility.Hidden;
+                
+                //線を消す
+                foreach(Path p in m.PathList)
+                {
+                    p.Visibility = Visibility.Hidden;
+                    main_grid.Children.Remove(p);
+                }
+                main_grid.Children.Remove(m);
+            }
+
+            foreach(Material_StartBox m in material_start)
+            {
+                m.Visibility = Visibility.Hidden;
+                
+                //線を消す
+                foreach (Path p in m.PathList)
+                {
+                    p.Visibility = Visibility.Hidden;
+                    main_grid.Children.Remove(p);
+                }
+
                 main_grid.Children.Remove(m);
             }
             material_boxs.Clear();
+            material_start.Clear();
         }
 
-        private void ShowMaterialTree(material material, int ylevel)
+        private void ShowMaterialTree(material material, int ylevel, double x = 0,double y = 0)
         {
             if (showLevel_Temp.Count - 1 < ylevel)
             {
                 showLevel_Temp.Add(0);
             }
 
-            ShowMaterial(material.Recipes, showLevel_Temp[ylevel], ylevel);
+            (double Px,double Py) = ShowMaterial(material.Recipes, showLevel_Temp[ylevel], ylevel,x,y);
             showLevel_Temp[ylevel]++;
-
-            Console.WriteLine("=================");
-            foreach(OP_Recipe2 o in material.Recipes)
-            {
-                Console.WriteLine(o.name);
-            }
 
             foreach(material m in material.material_childs)
             {
-                ShowMaterialTree(m, ylevel + 1);
+                ShowMaterialTree(m, ylevel + 1,Px,Py);
+            }
+
+            if(material.material_childs.Count == 0)
+            {
+                if(showLevel_Temp.Count < ylevel + 2)
+                {
+                    showLevel_Temp.Add(0);
+                }
+                foreach(List<op_stct2> op in material.material_op)
+                {
+                    ShowStartMaterial(op, showLevel_Temp[ylevel + 1], ylevel + 1,Px,Py);
+                    showLevel_Temp[ylevel + 1]++;
+                }
             }
         }
 
-        private void ShowMaterial(List<OP_Recipe2> m, int x, int y)
+        //(double x,double y)の戻り地は書かれた場所の座標
+        private (double,double) ShowMaterial(List<OP_Recipe2> m, int x, int y,double parentX=0,double parentY=0)
         {
-            int y_count = 1;
-            if(y != 0)
-            {
-                y_count = material_levels[y - 1];
-            }
-
+            //int y_count = material_levels[y];
             OP_MaterialBox box = new OP_MaterialBox(tools.add_NULL_Recipe(material_slot, m));
             main_grid.Children.Add(box);
             material_boxs.Add(box);
 
+            /*
             double width_x = this.Width - Width_margin;
             double height_y = this.Height - Height_top;
 
@@ -114,11 +142,103 @@ namespace PSO2_OptionalAbility_Creator
             double pointY = dy_point + (dy_point + (box.Height + Height_margin)) * y;
 
             box.Margin = ConvertXY(pointX + Width_margin, pointY + Height_top,box.Width,BoxHeight);
+            */
             //box.Margin = new Thickness(pointX, pointY, this.Width - box.Width, this.Height - box.Height);
+
+            (Thickness point, string geoStr) = CalcShowPoint(x, y, box.Width, box.Height, parentX, parentY);
+            box.Margin = point;
+
+            if (parentX != 0 && parentY != 0)
+            {
+                /*
+                double centerX = pointX + box.Width / 2;
+                double centerY = pointY;
+                */
+
+                Path p = new Path();
+                p.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                p.StrokeThickness = 2;
+                //string geoStr = string.Format("M{0},{1} L{2},{3}",centerX,centerY,parentX,parentY);
+                p.Data = Geometry.Parse(geoStr);
+
+                box.PathList.Add(p);
+                main_grid.Children.Add(p);
+            }
+
+            return (point.Left + box.Width /2, point.Top+box.Height);
 
         }
 
-        //右上原点からThicknessを作る
+        private void ShowStartMaterial(List<op_stct2> op,int x,int y,double parentX,double parentY)
+        {
+            //int y_count = material_levels[y];
+
+            Material_StartBox box = new Material_StartBox(tools.add_NULL_op(material_slot,op));
+            main_grid.Children.Add(box);
+            material_start.Add(box);
+
+            /*
+            double width_x = this.Width - Width_margin;
+            double height_y = this.Height - Height_top;
+
+            double dx_point = (width_x - ((box.Width + Width_margin) * y_count)) / (y_count + 1);
+            double dy_point = (height_y - ((box.Height + Height_margin) * (material_levels.Count + 1))) / (material_levels.Count + 2);
+
+            double pointX = dx_point + (dx_point + (box.Width + Width_margin)) * x;
+            double pointY = dy_point + (dy_point + (box.Height + Height_margin)) * y;
+
+            box.Margin = ConvertXY(pointX + Width_margin, pointY + Height_top, box.Width, BoxHeight);
+            */
+
+            (Thickness point, string geoStr) = CalcShowPoint(x, y, box.Width, box.Height, parentX, parentY);
+            box.Margin = point;
+
+            if (parentX != 0 && parentY != 0)
+            {
+                /*
+                double centerX = pointX + box.Width / 2;
+                double centerY = pointY;
+                */
+                Path p = new Path();
+                p.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                p.StrokeThickness = 2;
+                //string geoStr = string.Format("M{0},{1} L{2},{3}", centerX, centerY, parentX, parentY);
+                p.Data = Geometry.Parse(geoStr);
+
+                box.PathList.Add(p);
+                main_grid.Children.Add(p);
+            }
+        }
+
+        private (Thickness, string) CalcShowPoint(int x, int y, double windowWidth, double windowHeight, double parentX = 0, double parentY = 0)
+        {
+            int y_count = material_levels[y];
+
+            double width_x = this.Width - Width_margin;
+            double height_y = this.Height - Height_top;
+
+            double dx_point = (width_x - ((windowWidth + Width_margin) * y_count)) / (y_count + 1);
+            double dy_point = (height_y - ((windowHeight + Height_margin) * (material_levels.Count + 1))) / (material_levels.Count + 2);
+
+            double pointX = dx_point + (dx_point + (windowWidth + Width_margin)) * x;
+            double pointY = dy_point + (dy_point + (windowHeight + Height_margin)) * y;
+
+            Thickness point = ConvertXY(pointX + Width_margin, pointY + Height_top, windowWidth, windowHeight);
+
+            string geoStr = "";
+            if (parentX != 0 && parentY != 0)
+            {
+                double centerX = point.Left + windowWidth / 2;
+                double centerY = point.Top;
+                geoStr = string.Format("M{0},{1} L{2},{3}", centerX, centerY, parentX, parentY);
+            }
+
+            return (point,geoStr);
+        }
+
+
+
+            //右上原点からThicknessを作る
         private Thickness ConvertXY(double x, double y, double wx, double wy)
         {
 
@@ -126,25 +246,41 @@ namespace PSO2_OptionalAbility_Creator
         }
 
         //ツリーの深さと幅の探索
-        private void Material_Level(material material,int level)
+        private void Material_Level(material material, int level)
         {
-            if(material_levels.Count - 1 < level)
+            if(level == 0)
+            {
+                material_levels.Add(1);
+            }
+
+            if (material_levels.Count - 1 < level + 2)
             {
                 material_levels.Add(0);
             }
 
-            material_levels[level] +=  material.material_op.Count;
+            //material_levels[level] +=  material.material_op.Count;
+            material_levels[level+1] += material.material_childs.Count;
 
-            foreach(material m in material.material_childs)
+            foreach (material m in material.material_childs)
             {
                 Material_Level(m, level + 1);
+            }
+
+            if (material.material_childs.Count == 0)
+            {
+                if (material_levels.Count < level + 2)
+                {
+                    material_levels.Add(0);
+                }
+
+                material_levels[level + 1] += material.material_op.Count;
             }
         }
 
         //表示領域の縦横の計算
         private (int,int) PageWidthHeight(int slot)
         {
-
+            BoxHeight = 120;
             BoxHeight += BoxHeight_OP * (slot - 1);
 
             int width = (BoxWidth + Width_margin) * material_levels.Max();

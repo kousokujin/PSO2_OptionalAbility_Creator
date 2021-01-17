@@ -155,6 +155,9 @@ namespace PSO2_OptionalAbility_Creator
             {
                 var page = (OP_TreePage)tree_page;
                 page.ShowMaterialTree(m);
+
+                //TreeFrame_ViewBox.Width = TreeFrameBoader.Width;
+
             }
         }
     }

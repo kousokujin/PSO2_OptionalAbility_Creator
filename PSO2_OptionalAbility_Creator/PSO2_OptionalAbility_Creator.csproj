@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Material_StartBox.xaml.cs">
+      <DependentUpon>Material_StartBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MemorySQL_Load.cs" />
     <Compile Include="OPData_Memory.cs" />
     <Compile Include="OP_CompositionEngine.cs" />
@@ -88,6 +91,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Material_StartBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OP_MaterialBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

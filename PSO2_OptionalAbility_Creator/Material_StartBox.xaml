@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="PSO2_OptionalAbility_Creator.Material_StartBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSO2_OptionalAbility_Creator"
+             mc:Ignorable="d" 
+             Height="75" Width="200" Background="#FF48484F" BorderBrush="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/styles/OP_MaterialBoxStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="#FFFFFFFF">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="79*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="素材" Margin="10,10,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <ListBox x:Name="OP_ListBox" Margin="10,41,10,10" VerticalContentAlignment="Top" Grid.ColumnSpan="2" ItemsSource="{Binding material}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <ListBoxItem Height="20" Content="{Binding}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Border>
+</UserControl>

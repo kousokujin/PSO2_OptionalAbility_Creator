@@ -23,6 +23,7 @@ namespace PSO2_OptionalAbility_Creator
     {
         public ObservableCollection<OP_recipe_Data> recipe;
         private OP_RecipiBox_Data opr_boxdata;
+        public List<Path> PathList;
 
         public OP_MaterialBox(List<OP_Recipe2> recipes)
         {
@@ -31,6 +32,7 @@ namespace PSO2_OptionalAbility_Creator
 
             InitializeComponent();
             opr_boxdata = new OP_RecipiBox_Data(recipes);
+            PathList = new List<Path>();
             DataContext = opr_boxdata;
             OP_ListBox.ItemsSource = opr_boxdata.recipe;
 

@@ -66,11 +66,11 @@
                 <ComboBoxItem>HP/PP系</ComboBoxItem>
                 <ComboBoxItem>特殊系</ComboBoxItem>
             </ComboBox>
-            <Border Margin="387,71,10,10" BorderThickness="1" BorderBrush="White" Background="#FF252526" >
-                <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <Viewbox Height="Auto" Width="Auto">
-                        <Frame x:Name="TreeFrame" Content="Frame" Source="OP_TreePage.xaml" Width="Auto" Height="Auto"/>
-                    </Viewbox>
+            <Border x:Name="TreeFrameBoader" Margin="387,71,10,10" BorderThickness="1" BorderBrush="White" Background="#FF252526" >
+                <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                    <!--<Viewbox x:Name="TreeFrame_ViewBox" Height="Auto" Width="Auto">-->
+                        <Frame x:Name="TreeFrame" Content="Frame" Width="Auto" Height="Auto" Source="OP_TreePage.xaml" VerticalContentAlignment="Stretch"/>
+                    <!--</Viewbox>-->
                 </ScrollViewer>
             </Border>
             <Label Content="設計図" HorizontalAlignment="Left" Margin="387,45,0,0" VerticalAlignment="Top" Width="125" Padding="0,5,5,5"/>
