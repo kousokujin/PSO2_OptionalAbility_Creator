@@ -19,11 +19,21 @@ namespace PSO2_OptionalAbility_Creator
     /// <summary>
     /// OP_MaterialBox.xaml の相互作用ロジック
     /// </summary>
-    public partial class OP_MaterialBox : UserControl
+    public partial class OP_MaterialBox : UserControl, IMaterialBox
     {
         public ObservableCollection<OP_recipe_Data> recipe;
         private OP_RecipiBox_Data opr_boxdata;
-        public List<Path> PathList;
+        
+        //親につながる線
+        public Path path { get; set; }
+
+        public List<IMaterialBox> childrenbox { get; set; }
+
+        public event EventHandler moveEvent;
+        public bool flag_memo
+        {
+            get; set;
+        }
 
         public OP_MaterialBox(List<OP_Recipe2> recipes)
         {
@@ -32,12 +42,93 @@ namespace PSO2_OptionalAbility_Creator
 
             InitializeComponent();
             opr_boxdata = new OP_RecipiBox_Data(recipes);
-            PathList = new List<Path>();
             DataContext = opr_boxdata;
             OP_ListBox.ItemsSource = opr_boxdata.recipe;
 
             int add_height = 20 * (opr_boxdata.recipe.Count - 1);
             Height += add_height;
+
+            childrenbox = new List<IMaterialBox>();
+        }
+
+        //子要素に応じてちょうどいい位置に動く
+        public void MoveCenter()
+        {
+            //子要素の一番左のx座標
+            double x_left = childrenbox.Select(x => x.GetBoxPosition().Left).ToList().Min();
+
+            //子要素の一番右のx座標
+            double x_right = childrenbox.Select(x => x.GetBoxPosition().Right).ToList().Min();
+
+            //親コントロールの幅
+            double maxWidth = Margin.Left + Margin.Right + Width;
+
+            double PosWidth = (maxWidth - x_left - x_right - Width);
+            PosWidth /= 2.0;
+            double LeftMargin = x_left + PosWidth;
+            double RightMargin = x_right + PosWidth;
+
+            double top = this.Margin.Top;
+            double bottom = this.Margin.Bottom;
+
+            this.Margin = new Thickness(LeftMargin, top, RightMargin, bottom);
+
+            //線を引き直す
+            double thisCenterX = Margin.Left + Width / 2;
+            double thisCenterY = Margin.Top + Height;
+            
+            foreach(IMaterialBox m in childrenbox)
+            {
+                (double childW, double childH) = m.GetWidthHeight();
+                double childcenterX = m.GetBoxPosition().Left + childW/2;
+                double childcenterY = m.GetBoxPosition().Top;
+
+                string geoStr = string.Format("M{0},{1} L{2},{3}", thisCenterX, thisCenterY,childcenterX, childcenterY);
+                m.path.Data = Geometry.Parse(geoStr);
+            }
+
+            moveEvent?.Invoke(this, new EventArgs());
+
+        }
+
+        public Path getPath()
+        {
+            return path;
+        }
+
+        public Thickness GetBoxPosition()
+        {
+            return this.Margin;
+        }
+
+        //子要素が動いたとき
+        public void ChildrenMove(object sender,EventArgs e)
+        {
+            if(sender is IMaterialBox)
+            {
+                var box = (IMaterialBox)sender;
+                box.flag_memo = true;
+
+                bool all_flag = childrenbox.All(x => x.flag_memo == true);
+
+                if(all_flag == true)
+                {
+                    MoveCenter();
+                    childrenbox.ForEach(x => x.flag_memo = false);
+                }
+
+                MoveCenter();
+            }
+        }
+
+        public (double,double) GetWidthHeight()
+        {
+            return (this.Width, this.Height);
+        }
+        //強制的にイベント発火
+        public void forceEvent()
+        {
+            moveEvent?.Invoke(this, new EventArgs());
         }
     }
 
@@ -133,5 +224,25 @@ namespace PSO2_OptionalAbility_Creator
         {
             this.origin_recipe = recipe;
         }
+    }
+
+    public interface IMaterialBox
+    {
+        Thickness GetBoxPosition();
+        (double, double) GetWidthHeight();
+        bool flag_memo { get; set; }
+
+        //親につながる線
+        Path path { get; set; }
+
+        //自分が移動したとき
+        event EventHandler moveEvent;
+        List<IMaterialBox> childrenbox { get; set; }
+
+        //void MoveCenter();
+
+        void ChildrenMove(object sender, EventArgs e);
+
+        void forceEvent();
     }
 }

@@ -29,6 +29,9 @@ namespace PSO2_OptionalAbility_Creator
         List<int> material_levels;
         List<int> showLevel_Temp;
 
+        //イベント発火処理用（かえたい）
+        List<IMaterialBox> EventBox = new List<IMaterialBox>();
+
         int BoxHeight = 120;
         int BoxHeight_OP = 20;
         int BoxWidth = 200;
@@ -45,6 +48,7 @@ namespace PSO2_OptionalAbility_Creator
             showLevel_Temp = new List<int>();
             material_boxs = new List<OP_MaterialBox>();
             material_start = new List<Material_StartBox>();
+            EventBox = new List<IMaterialBox>();
             //ShowMaterial(material.Recipes, 0, 0);
         }
 
@@ -56,7 +60,10 @@ namespace PSO2_OptionalAbility_Creator
             material_slot = m.Recipes.Count;
             Material_Level(m, 0);
             (this.Width, this.Height) = PageWidthHeight(m.Recipes.Count);
-            ShowMaterialTree(m, 0);
+            var box = ShowMaterialTree(m, 0);
+
+            EventBox.ForEach(x => x.forceEvent());
+            EventBox.Clear();
         }
         private void ClearDisplay()
         {
@@ -66,27 +73,23 @@ namespace PSO2_OptionalAbility_Creator
 
             foreach(OP_MaterialBox m in material_boxs)
             {
+                //Path matPath = m.getPath();
+                //matPath.Visibility = Visibility.Hidden;
+
                 m.Visibility = Visibility.Hidden;
-                
+
+                //m.path.Visibility = Visibility.Hidden;
+                main_grid.Children.Remove(m.path);
                 //線を消す
-                foreach(Path p in m.PathList)
-                {
-                    p.Visibility = Visibility.Hidden;
-                    main_grid.Children.Remove(p);
-                }
                 main_grid.Children.Remove(m);
             }
 
             foreach(Material_StartBox m in material_start)
             {
                 m.Visibility = Visibility.Hidden;
-                
-                //線を消す
-                foreach (Path p in m.PathList)
-                {
-                    p.Visibility = Visibility.Hidden;
-                    main_grid.Children.Remove(p);
-                }
+
+                m.path.Visibility = Visibility.Hidden;
+                main_grid.Children.Remove(m.path);
 
                 main_grid.Children.Remove(m);
             }
@@ -94,56 +97,50 @@ namespace PSO2_OptionalAbility_Creator
             material_start.Clear();
         }
 
-        private void ShowMaterialTree(material material, int ylevel, double x = 0,double y = 0)
+        private IMaterialBox ShowMaterialTree(material material, int ylevel, double x = 0,double y = 0)
         {
             if (showLevel_Temp.Count - 1 < ylevel)
             {
                 showLevel_Temp.Add(0);
             }
 
-            (double Px,double Py) = ShowMaterial(material.Recipes, showLevel_Temp[ylevel], ylevel,x,y);
+            (IMaterialBox parent,double Px,double Py) = ShowMaterial(material.Recipes, showLevel_Temp[ylevel], ylevel,x,y);
             showLevel_Temp[ylevel]++;
 
-            foreach(material m in material.material_childs)
+            foreach (material m in material.material_childs)
             {
-                ShowMaterialTree(m, ylevel + 1,Px,Py);
+                IMaterialBox childBox = ShowMaterialTree(m, ylevel + 1,Px,Py);
+                childBox.moveEvent += parent.ChildrenMove;　//これどうにかしたい
+                parent.childrenbox.Add(childBox);
             }
 
             if(material.material_childs.Count == 0)
             {
+                
                 if(showLevel_Temp.Count < ylevel + 2)
                 {
                     showLevel_Temp.Add(0);
                 }
                 foreach(List<op_stct2> op in material.material_op)
                 {
-                    ShowStartMaterial(op, showLevel_Temp[ylevel + 1], ylevel + 1,Px,Py);
+                    IMaterialBox startbox = ShowStartMaterial(op, showLevel_Temp[ylevel + 1], ylevel + 1,Px,Py);
+                    startbox.moveEvent += parent.ChildrenMove;
                     showLevel_Temp[ylevel + 1]++;
+                    parent.childrenbox.Add(startbox);
+                    EventBox.Add(startbox);
                 }
             }
+
+            return parent;
         }
 
         //(double x,double y)の戻り地は書かれた場所の座標
-        private (double,double) ShowMaterial(List<OP_Recipe2> m, int x, int y,double parentX=0,double parentY=0)
+        private (IMaterialBox, double,double) ShowMaterial(List<OP_Recipe2> m, int x, int y,double parentX=0,double parentY=0)
         {
             //int y_count = material_levels[y];
             OP_MaterialBox box = new OP_MaterialBox(tools.add_NULL_Recipe(material_slot, m));
             main_grid.Children.Add(box);
             material_boxs.Add(box);
-
-            /*
-            double width_x = this.Width - Width_margin;
-            double height_y = this.Height - Height_top;
-
-            double dx_point = (width_x - ((box.Width+Width_margin) * y_count)) / (y_count + 1);
-            double dy_point = (height_y - ((box.Height + Height_margin) * (material_levels.Count + 1)))/(material_levels.Count + 2);
-
-            double pointX = dx_point + (dx_point + (box.Width+Width_margin)) * x;
-            double pointY = dy_point + (dy_point + (box.Height + Height_margin)) * y;
-
-            box.Margin = ConvertXY(pointX + Width_margin, pointY + Height_top,box.Width,BoxHeight);
-            */
-            //box.Margin = new Thickness(pointX, pointY, this.Width - box.Width, this.Height - box.Height);
 
             (Thickness point, string geoStr) = CalcShowPoint(x, y, box.Width, box.Height, parentX, parentY);
             box.Margin = point;
@@ -161,34 +158,21 @@ namespace PSO2_OptionalAbility_Creator
                 //string geoStr = string.Format("M{0},{1} L{2},{3}",centerX,centerY,parentX,parentY);
                 p.Data = Geometry.Parse(geoStr);
 
-                box.PathList.Add(p);
+                box.path = p;
                 main_grid.Children.Add(p);
             }
 
-            return (point.Left + box.Width /2, point.Top+box.Height);
+            return (box,point.Left + box.Width /2, point.Top+box.Height);
 
         }
 
-        private void ShowStartMaterial(List<op_stct2> op,int x,int y,double parentX,double parentY)
+        private IMaterialBox ShowStartMaterial(List<op_stct2> op,int x,int y,double parentX,double parentY)
         {
             //int y_count = material_levels[y];
 
             Material_StartBox box = new Material_StartBox(tools.add_NULL_op(material_slot,op));
             main_grid.Children.Add(box);
             material_start.Add(box);
-
-            /*
-            double width_x = this.Width - Width_margin;
-            double height_y = this.Height - Height_top;
-
-            double dx_point = (width_x - ((box.Width + Width_margin) * y_count)) / (y_count + 1);
-            double dy_point = (height_y - ((box.Height + Height_margin) * (material_levels.Count + 1))) / (material_levels.Count + 2);
-
-            double pointX = dx_point + (dx_point + (box.Width + Width_margin)) * x;
-            double pointY = dy_point + (dy_point + (box.Height + Height_margin)) * y;
-
-            box.Margin = ConvertXY(pointX + Width_margin, pointY + Height_top, box.Width, BoxHeight);
-            */
 
             (Thickness point, string geoStr) = CalcShowPoint(x, y, box.Width, box.Height, parentX, parentY);
             box.Margin = point;
@@ -205,9 +189,11 @@ namespace PSO2_OptionalAbility_Creator
                 //string geoStr = string.Format("M{0},{1} L{2},{3}", centerX, centerY, parentX, parentY);
                 p.Data = Geometry.Parse(geoStr);
 
-                box.PathList.Add(p);
+                box.path = p;
                 main_grid.Children.Add(p);
             }
+
+            return box;
         }
 
         private (Thickness, string) CalcShowPoint(int x, int y, double windowWidth, double windowHeight, double parentX = 0, double parentY = 0)
@@ -238,7 +224,7 @@ namespace PSO2_OptionalAbility_Creator
 
 
 
-            //右上原点からThicknessを作る
+        //右上原点からThicknessを作る
         private Thickness ConvertXY(double x, double y, double wx, double wy)
         {
 

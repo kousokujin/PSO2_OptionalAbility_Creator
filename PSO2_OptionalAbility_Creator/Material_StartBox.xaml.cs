@@ -19,22 +19,66 @@ namespace PSO2_OptionalAbility_Creator
     /// <summary>
     /// Material_StartBox.xaml の相互作用ロジック
     /// </summary>
-    public partial class Material_StartBox : UserControl
+    public partial class Material_StartBox : UserControl,IMaterialBox
     {
         private ObservableCollection<op_stct2> material;
-        public List<Path> PathList;
+        
+        //親につながる線
+        public Path path { get; set; }
+
+        public List<IMaterialBox> childrenbox { get; set; }
+        public event EventHandler moveEvent;
+
+        public bool flag_memo
+        {
+            get; set;
+        }
         public Material_StartBox(List<op_stct2> material)
         {
             InitializeComponent();
 
             this.material = new ObservableCollection<op_stct2>();
             material.ForEach(x => this.material.Add(x));
-            PathList = new List<Path>();
+            childrenbox = new List<IMaterialBox>();
 
             OP_ListBox.ItemsSource = this.material;
 
             int add_height = 22 * (material.Count - 1);
             Height += add_height;
+
+            //moveEvent?.Invoke(this, new EventArgs());
+        }
+
+        public Thickness GetBoxPosition()
+        {
+            return this.Margin;
+        }
+
+        public void MoveCenter()
+        {
+            //なにもしない
+        }
+
+        public void ChildrenMove(object sender,EventArgs e)
+        {
+            //なにもしない
+        }
+
+        //強制的にイベント発火
+        public void forceEvent()
+        {
+            moveEvent?.Invoke(this, new EventArgs());
+        }
+
+        //縦横の大きさを返す
+        public (double, double) GetWidthHeight()
+        {
+            return (this.Width, this.Height);
+        }
+
+        public Path getPath()
+        {
+            return path;
         }
     }
 }
