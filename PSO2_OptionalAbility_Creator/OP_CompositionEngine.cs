@@ -370,13 +370,14 @@ namespace PSO2_OptionalAbility_Creator
                     }
                 }
             }
-        
+
 
             return new material()
             {
                 //material_op = output_material_bodys.Select(x => add_NULL_op(target.Length, x)).ToList(),
                 material_op = output_material_bodys,
-                Recipes = output_target
+                Recipes = output_target,
+                material_end = new List<List<op_stct2>>()
             };
         }
 
@@ -443,6 +444,20 @@ namespace PSO2_OptionalAbility_Creator
             {
                 foreach (List<op_stct2> o in output_mat.material_op)
                 {
+                    if(o.Count == 1)
+                    {
+                        int parcent = 0;
+                        (int p, List<op_stct2> mat) = GetMaterials(o[0],parcent);
+
+                        List<string> subOP = tools.SubList(o.Select(x => x.op_name).ToList(), mat.Select(x => x.op_name).ToList());
+
+                        if(subOP.Count == 0)
+                        {
+                            output_mat.material_end.Add(o);
+                            continue;
+                        }
+                    }
+
                     material m = SerchOP(o.ToArray(), percent_plus);
                     output_mat.material_childs.Add(m);
                 }
@@ -459,6 +474,7 @@ namespace PSO2_OptionalAbility_Creator
     public class material
     {
         public List<List<op_stct2>> material_op; //素材op
+        public List<List<op_stct2>> material_end; //マイショップで買うOP
         public List<material> material_childs;
         public List<OP_Recipe2> Recipes;
 

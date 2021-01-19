@@ -117,7 +117,7 @@ namespace PSO2_OptionalAbility_Creator
 
             double x_shift = ((double)shift / (double)all_material) * width_fix;
             double windowX = wn + x_shift + Width_margin;
-            double windowY = CalcShowPointY(level, BoxHeight);
+            double windowY = CalcShowPointY(level);
 
             //OP_MaterialBox matBox = ShowMaterial(m.Recipes, windowX, windowY);
             OP_MaterialBox matBox = ShowMaterial(m.Recipes,windowX, windowY);
@@ -139,8 +139,17 @@ namespace PSO2_OptionalAbility_Creator
                 main_grid.Children.Add(p);
             }
 
+            if(m.material_end != null && m.material_end.Count != 0)
+            {
+                MaterialBoxPut(m.material_end, Width, all_material, shift2, level, windowX, windowY);
+            }
+
+
+            //末端ノードのみだと思う
             if (m.material_childs.Count == 0)
             {
+                MaterialBoxPut(m.material_op, Width, all_material, shift, level, windowX, windowY);
+                /*
                 double dw = width_fix / all_material;
                 double x = Width_margin+(dw * shift);
 
@@ -161,6 +170,7 @@ namespace PSO2_OptionalAbility_Creator
 
                     x += dw;
                 }
+                */
             }
 
 
@@ -168,14 +178,36 @@ namespace PSO2_OptionalAbility_Creator
 
         }
 
-        private double CalcShowPointY(int y, double windowHeight)
+        private void MaterialBoxPut(List<List<op_stct2>> opList,double width_fix,int all_material,double shift,int level,double windowX,double windowY)
         {
+            double dw = width_fix / all_material;
+            double x = Width_margin + (dw * shift);
 
-            double height_y = this.Height - Height_top;
-            double dy_point = (height_y - ((windowHeight + Height_margin) * (material_levels.Count + 1))) / (material_levels.Count + 2);
-            double pointY = dy_point + (dy_point + (windowHeight + Height_margin)) * y;
+            double y = CalcShowPointY(level + 1);
 
-            return pointY + Height_top;
+            foreach (List<op_stct2> ops in opList)
+            {
+                Material_StartBox opBox = ShowMaterial(ops, x, y);
+
+                //線を引く
+                Path p = new Path();
+                p.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                p.StrokeThickness = 2;
+                string geoStr = string.Format("M{0},{1} L{2},{3}", windowX + BoxWidth / 2, windowY + BoxHeight, x + BoxWidth / 2, y);
+                p.Data = Geometry.Parse(geoStr);
+                opBox.path = p;
+                main_grid.Children.Add(p);
+
+                x += dw;
+            }
+        }
+
+        private double CalcShowPointY(int ylevel)
+        {
+            double hight_y = Height_top;
+            double dy = BoxHeight + Height_margin;
+
+            return hight_y + (dy*ylevel);
         }
 
         private OP_MaterialBox ShowMaterial(List<OP_Recipe2> m, double x, double y)
