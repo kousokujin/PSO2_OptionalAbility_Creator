@@ -124,6 +124,7 @@ namespace PSO2_OptionalAbility_Creator
                 }
 
                 Remove_OP_Button.IsEnabled = true;
+                StartButton.IsEnabled = true;
             }
 
             TargetOP_ListBox.ItemsSource = ContextData.targetOPList;
@@ -141,6 +142,7 @@ namespace PSO2_OptionalAbility_Creator
                 if(ContextData.targetOPList.Count == 0)
                 {
                     Remove_OP_Button.IsEnabled = false;
+                    StartButton.IsEnabled = false;
                 }
                 Add_OP_Button.IsEnabled = true;
 
@@ -156,6 +158,7 @@ namespace PSO2_OptionalAbility_Creator
             TargetOP_ListBox.ItemsSource = ContextData.targetOPList;
             Add_OP_Button.IsEnabled = true;
             Remove_OP_Button.IsEnabled = false;
+            StartButton.IsEnabled = false;
 
         }
 
@@ -212,42 +215,87 @@ namespace PSO2_OptionalAbility_Creator
             e.Handled = true;
         }
 
+        //拡大縮小
         private void ViewBoxWheel(MouseWheelEventArgs e)
         {
             KeyStates ctrlL = KeyStateFilter(Keyboard.GetKeyStates(Key.LeftCtrl));
             KeyStates ctrlR = KeyStateFilter(Keyboard.GetKeyStates(Key.RightCtrl));
 
+            int scale = 1;
+            double offset = (TreeFrame_ViewBox.Width + TreeFrame_ViewBox.Height)/20;
+
             if (ctrlL == KeyStates.Down || ctrlR == KeyStates.Down)
             {
+                /*
                 if (TreeFrame_ViewBox.Width != double.NaN && TreeFrame_ViewBox.Height != double.NaN)
                 {
-                    /*
-                    double edge_X = Width - (TreeFrameBoader.Margin.Left + TreeFrameBoader.Margin.Right);
-                    double edge_Y = Height - (TreeFrameBoader.Margin.Top + TreeFrameBoader.Margin.Bottom);
+                    double dWidth = offset*scale;
+                    double dHeight = offset*scale;
 
-                    double tempWidth = TreeFrame_ViewBox.Width;
-                    double tempHeight = TreeFrame_ViewBox.Height;
-                    */
-
-                    double VerticalRate = Tree_Scroll.VerticalOffset / Tree_Scroll.ScrollableHeight;
-                    double HorizontalRate = Tree_Scroll.HorizontalOffset / Tree_Scroll.ScrollableWidth;
-
-                    double rate = TreeFrame.Height / TreeFrame.Width;
                     if (e.Delta > 0)
                     {
-                        TreeFrame_ViewBox.Width += 100;
-                        TreeFrame_ViewBox.Height += 100;
+                        TreeFrame_ViewBox.Width += dWidth;
+                        TreeFrame_ViewBox.Height += dHeight;
+                        Tree_Scroll.ScrollToVerticalOffset(Tree_Scroll.VerticalOffset + (dHeight/2));
+                        Tree_Scroll.ScrollToHorizontalOffset(Tree_Scroll.HorizontalOffset + (dWidth/2));
+                        //scale++;
                     }
                     else
                     {
-                        TreeFrame_ViewBox.Width -= 100;
-                        TreeFrame_ViewBox.Height -= 100;
-                    }
+                        if (TreeFrame_ViewBox.Width > dWidth && TreeFrame_ViewBox.Height > dHeight)
+                        {
 
-                    //Tree_Scroll.ScrollToVerticalOffset(VerticalRate * Tree_Scroll.ScrollableWidth);
-                    //Tree_Scroll.ScrollToHorizontalOffset(HorizontalRate * Tree_Scroll.ScrollableHeight);
+                            TreeFrame_ViewBox.Width -= dWidth;
+                            TreeFrame_ViewBox.Height -= dHeight;
+                            Tree_Scroll.ScrollToVerticalOffset(Tree_Scroll.VerticalOffset - (dHeight/2));
+                            Tree_Scroll.ScrollToHorizontalOffset(Tree_Scroll.HorizontalOffset - (dWidth/2));
+                            //scale--;
+                        }
+                    }
+                }
+                */
+
+                if (e.Delta > 0)
+                {
+                    ScaleUPandDown(false);
+                }
+                else
+                {
+                    ScaleUPandDown(true);
                 }
 
+            }
+        }
+
+        private void ScaleUPandDown(bool isScaledown)
+        {
+            double offset = (TreeFrame_ViewBox.Width + TreeFrame_ViewBox.Height) / 20;
+
+            if (TreeFrame_ViewBox.Width != double.NaN && TreeFrame_ViewBox.Height != double.NaN)
+            {
+                double dWidth = offset;
+                double dHeight = offset;
+
+                if (isScaledown == false)
+                {
+                    TreeFrame_ViewBox.Width += dWidth;
+                    TreeFrame_ViewBox.Height += dHeight;
+                    Tree_Scroll.ScrollToVerticalOffset(Tree_Scroll.VerticalOffset + (dHeight / 2));
+                    Tree_Scroll.ScrollToHorizontalOffset(Tree_Scroll.HorizontalOffset + (dWidth / 2));
+                    //scale++;
+                }
+                else
+                {
+                    if (TreeFrame_ViewBox.Width > dWidth && TreeFrame_ViewBox.Height > dHeight)
+                    {
+
+                        TreeFrame_ViewBox.Width -= dWidth;
+                        TreeFrame_ViewBox.Height -= dHeight;
+                        Tree_Scroll.ScrollToVerticalOffset(Tree_Scroll.VerticalOffset - (dHeight / 2));
+                        Tree_Scroll.ScrollToHorizontalOffset(Tree_Scroll.HorizontalOffset - (dWidth / 2));
+                        //scale--;
+                    }
+                }
             }
         }
 
@@ -271,6 +319,17 @@ namespace PSO2_OptionalAbility_Creator
             ScrollViewer_Wheel(e);
             ViewBoxWheel(e);
             e.Handled = true;
+        }
+
+        //拡大ボタン
+        private void ScaleUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            ScaleUPandDown(false);
+        }
+        //縮小ボタン
+        private void ScaleDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            ScaleUPandDown(true);
         }
     }
 
