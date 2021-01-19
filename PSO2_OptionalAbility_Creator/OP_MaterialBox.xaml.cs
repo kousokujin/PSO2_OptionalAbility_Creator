@@ -19,7 +19,7 @@ namespace PSO2_OptionalAbility_Creator
     /// <summary>
     /// OP_MaterialBox.xaml の相互作用ロジック
     /// </summary>
-    public partial class OP_MaterialBox : UserControl, IMaterialBox
+    public partial class OP_MaterialBox : UserControl
     {
         public ObservableCollection<OP_recipe_Data> recipe;
         private OP_RecipiBox_Data opr_boxdata;
@@ -27,13 +27,15 @@ namespace PSO2_OptionalAbility_Creator
         //親につながる線
         public Path path { get; set; }
 
-        public List<IMaterialBox> childrenbox { get; set; }
+        //public List<IMaterialBox> childrenbox { get; set; }
 
-        public event EventHandler moveEvent;
+        //public event EventHandler moveEvent;
+        /*
         public bool flag_memo
         {
             get; set;
         }
+        */
 
         public OP_MaterialBox(List<OP_Recipe2> recipes)
         {
@@ -48,10 +50,11 @@ namespace PSO2_OptionalAbility_Creator
             int add_height = 20 * (opr_boxdata.recipe.Count - 1);
             Height += add_height;
 
-            childrenbox = new List<IMaterialBox>();
+            //childrenbox = new List<IMaterialBox>();
         }
 
         //子要素に応じてちょうどいい位置に動く
+        /*
         public void MoveCenter()
         {
             //子要素の一番左のx座標
@@ -130,6 +133,8 @@ namespace PSO2_OptionalAbility_Creator
         {
             moveEvent?.Invoke(this, new EventArgs());
         }
+
+        */
     }
 
     public class OP_RecipiBox_Data
@@ -226,6 +231,7 @@ namespace PSO2_OptionalAbility_Creator
         }
     }
 
+    /*
     public interface IMaterialBox
     {
         Thickness GetBoxPosition();
@@ -245,4 +251,5 @@ namespace PSO2_OptionalAbility_Creator
 
         void forceEvent();
     }
+    */
 }

@@ -100,5 +100,23 @@ namespace PSO2_OptionalAbility_Creator
 
             return op_fix;
         }
+
+        //materialの一番根の数を数える
+        public static int CountMaterial(material material)
+        {
+            int sum = 0;
+            foreach(material m in material.material_childs)
+            {
+                sum += CountMaterial(m);
+            }
+
+            if(material.material_childs.Count == 0)
+            {
+                return material.material_op.Count;
+            }
+
+            return sum;
+
+        }
     }
 }
