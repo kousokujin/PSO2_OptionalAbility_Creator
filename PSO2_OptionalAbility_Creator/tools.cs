@@ -64,22 +64,22 @@ namespace PSO2_OptionalAbility_Creator
         }
 
         //slot_countより少ないop数の場合ゴミで埋める
-        public static List<op_stct2> add_NULL_op(int slot_count, List<op_stct2> op)
+        public static op_stct_count add_NULL_op(int slot_count, op_stct_count op)
         {
             if(slot_count == 0)
             {
                 return op;
             }
 
-            int d = slot_count - op.Count();
-            List<op_stct2> op_fix = op.Select(x => x).ToList();
+            int d = slot_count - op.name.Count();
+            List<op_stct2> op_fix = op.name.Select(x => x).ToList();
 
             for (int i = 0; i < d; i++)
             {
                 op_fix.Add(OPDataContainer.GetOP_Stct("none"));
             }
 
-            return op_fix;
+            return new op_stct_count() { count = op.count, name = op_fix };
         }
 
         public static List<OP_Recipe2> add_NULL_Recipe(int slot_count, List<OP_Recipe2> op)
@@ -118,6 +118,28 @@ namespace PSO2_OptionalAbility_Creator
             if(material.material_childs.Count == 0)
             {
                 return material.material_op.Count;
+            }
+
+            return sum;
+
+        }
+
+        public static int CountMaterial(material_count material)
+        {
+            int sum = 0;
+            foreach (material_count m in material.materials_childs_count)
+            {
+                sum += CountMaterial(m);
+            }
+
+            if (material.material_end_count != null)
+            {
+                sum += material.material_end_count.Count;
+            }
+
+            if (material.material_end_count.Count == 0)
+            {
+                return material.material_op_count.Count;
             }
 
             return sum;

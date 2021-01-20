@@ -59,6 +59,7 @@ namespace PSO2_OptionalAbility_Creator
     }
 
     //OP情報構造(sqlite)
+    /*
     public struct op_stct2
     {
         public string jp_name;
@@ -77,4 +78,11 @@ namespace PSO2_OptionalAbility_Creator
         public List<op_stct2> materials;   //必要な素材
         public int percent;    //成功確率
     }
+
+    public struct op_stct_count
+    {
+        public op_stct2 name;
+        public int count;
+    }
+    */
 }

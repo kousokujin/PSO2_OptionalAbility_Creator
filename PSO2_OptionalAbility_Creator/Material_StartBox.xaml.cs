@@ -22,7 +22,8 @@ namespace PSO2_OptionalAbility_Creator
     public partial class Material_StartBox : UserControl
     {
         private ObservableCollection<op_stct2> material;
-        
+        private int needcount;
+
         //親につながる線
         public Path path { get; set; }
 
@@ -35,18 +36,21 @@ namespace PSO2_OptionalAbility_Creator
             get; set;
         }
         */
-        public Material_StartBox(List<op_stct2> material)
+        public Material_StartBox(op_stct_count material)
         {
             InitializeComponent();
 
             this.material = new ObservableCollection<op_stct2>();
-            material.ForEach(x => this.material.Add(x));
+            material.name.ForEach(x => this.material.Add(x));
             //childrenbox = new List<IMaterialBox>();
 
             OP_ListBox.ItemsSource = this.material;
 
-            int add_height = 22 * (material.Count - 1);
+            int add_height = 22 * (material.name.Count - 1);
             Height += add_height;
+            
+            needcount = material.count;
+            NeedCountLabel.Content = string.Format("{0}個", needcount);
 
             //moveEvent?.Invoke(this, new EventArgs());
         }

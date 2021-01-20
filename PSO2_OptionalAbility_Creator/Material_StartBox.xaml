@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PSO2_OptionalAbility_Creator"
              mc:Ignorable="d" 
-             Height="75" Width="200" Background="#FF48484F" BorderBrush="White">
+             Height="100" Width="200" Background="#FF48484F" BorderBrush="White">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,17 +16,18 @@
     <Border BorderThickness="1" BorderBrush="#FFFFFFFF">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="79*"/>
-                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="素材" Margin="10,10,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <ListBox x:Name="OP_ListBox" Margin="10,41,10,10" VerticalContentAlignment="Top" Grid.ColumnSpan="2" ItemsSource="{Binding material}">
+            <Label Content="素材" Margin="10,10,1,0" VerticalAlignment="Top" Height="26"/>
+            <ListBox x:Name="OP_ListBox" Margin="10,41,10,30" VerticalContentAlignment="Top" ItemsSource="{Binding material}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <ListBoxItem Height="20" Content="{Binding}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Label Content="必要数" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Bottom" Padding="0" Height="25" Width="61" FontSize="18"/>
+            <Label x:Name="NeedCountLabel" Content="{Binding needcount}" HorizontalAlignment="Left" Margin="71,0,0,5" Width="117" Padding="0" Height="25" VerticalAlignment="Bottom" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Right" FontSize="18"/>
         </Grid>
     </Border>
 </UserControl>

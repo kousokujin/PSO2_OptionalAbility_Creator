@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:PSO2_OptionalAbility_Creator"
-             mc:Ignorable="d" Height="120" Width="200" Opacity="100" Background="#FF48484F" BorderBrush="White">
+             mc:Ignorable="d" Height="140" Width="200" Opacity="100" Background="#FF48484F" BorderBrush="White">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,7 +17,7 @@
         <Grid>
             <Label Content="成功率" Margin="10,10,10,0" VerticalAlignment="Top" Padding="0,5,5,5"/>
             <Label Margin="10,36,10,0" VerticalAlignment="Top" Height="40" FontSize="25" Padding="0,0,0,4" Content="{Binding getRaito_str}"/>
-            <ListBox x:Name="OP_ListBox" Margin="10,82,10,10" VerticalContentAlignment="Top" ItemsSource="{Binding recipe}">
+            <ListBox x:Name="OP_ListBox" Margin="10,82,10,30" VerticalContentAlignment="Top" ItemsSource="{Binding recipe}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Height="20">
@@ -27,6 +27,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Label Content="必要数" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Bottom" Padding="0,0,5,0" Height="25" FontSize="18"/>
+            <Label x:Name="NeedCountLabel" Content="{Binding needcount_str}" HorizontalAlignment="Left" Margin="69,0,0,5" Width="119" Padding="5,0,0,0" Height="25" VerticalAlignment="Bottom" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Right" FontSize="18"/>
         </Grid>
     </Border>
 </UserControl>

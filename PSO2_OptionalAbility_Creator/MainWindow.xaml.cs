@@ -165,12 +165,13 @@ namespace PSO2_OptionalAbility_Creator
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             material m = OP_CompositionEngine.SerchOP(ContextData.targetOPList.ToArray());
+            material_count mc = new material_count(m,1);
             var tree_page = TreeFrame.Content;
 
             if(tree_page is OP_TreePage)
             {
                 var page = (OP_TreePage)tree_page;
-                page.ShowMaterialTree(m);
+                page.ShowMaterialTree(mc);
                 //Console.WriteLine("FrameViewBox Width:{0}, Height:{1}", TreeFrame_ViewBox.Width, TreeFrame_ViewBox.Height);
 
                 double edge_X = Width - (TreeFrameBoader.Margin.Left + TreeFrameBoader.Margin.Right);

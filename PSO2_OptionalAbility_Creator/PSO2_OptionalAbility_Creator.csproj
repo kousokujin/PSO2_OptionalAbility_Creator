@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataClasses.cs" />
     <Compile Include="Material_StartBox.xaml.cs">
       <DependentUpon>Material_StartBox.xaml</DependentUpon>
     </Compile>

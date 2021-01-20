@@ -469,20 +469,4 @@ namespace PSO2_OptionalAbility_Creator
 
 
     }
-
-
-    public class material
-    {
-        public List<List<op_stct2>> material_op; //素材op
-        public List<List<op_stct2>> material_end; //マイショップで買うOP
-        public List<material> material_childs;
-        public List<OP_Recipe2> Recipes;
-
-        public material()
-        {
-            material_op = new List<List<op_stct2>>();
-            material_childs= new List<material>();
-            Recipes = new List<OP_Recipe2>();
-        }
-    }
 }

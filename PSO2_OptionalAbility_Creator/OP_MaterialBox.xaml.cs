@@ -37,13 +37,13 @@ namespace PSO2_OptionalAbility_Creator
         }
         */
 
-        public OP_MaterialBox(List<OP_Recipe2> recipes)
+        public OP_MaterialBox(List<OP_Recipe2> recipes,int count)
         {
             this.recipe = new ObservableCollection<OP_recipe_Data>();
             recipes.ForEach(x => this.recipe.Add(new OP_recipe_Data(x)));
 
             InitializeComponent();
-            opr_boxdata = new OP_RecipiBox_Data(recipes);
+            opr_boxdata = new OP_RecipiBox_Data(recipes,count);
             DataContext = opr_boxdata;
             OP_ListBox.ItemsSource = opr_boxdata.recipe;
 
@@ -140,6 +140,15 @@ namespace PSO2_OptionalAbility_Creator
     public class OP_RecipiBox_Data
     {
         public ObservableCollection<OP_recipe_Data> recipe;
+        private int needcount;
+
+        public string needcount_str
+        {
+            get
+            {
+                return string.Format("{0}個", needcount);
+            }
+        }
 
         //全体の成功率
         public float getRaito
@@ -198,10 +207,11 @@ namespace PSO2_OptionalAbility_Creator
             }
         }
 
-        public OP_RecipiBox_Data(List<OP_Recipe2> recipe)
+        public OP_RecipiBox_Data(List<OP_Recipe2> recipe,int needcount = 1)
         {
             this.recipe =new ObservableCollection<OP_recipe_Data>();
             recipe.ForEach(x => this.recipe.Add(new OP_recipe_Data(x)));
+            this.needcount = needcount;
         }
     }
 
