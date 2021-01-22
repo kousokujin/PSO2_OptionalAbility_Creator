@@ -164,7 +164,10 @@ namespace PSO2_OptionalAbility_Creator
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            material m = OP_CompositionEngine.SerchOP(ContextData.targetOPList.ToArray());
+            var camp = (PercentAdd)CampaignOP_Percent_Combobox.SelectedValue;
+            var itemadd = (PercentAdd)OP_ParcentAdd_ComboBox.SelectedValue;
+
+            material m = OP_CompositionEngine.SerchOP(ContextData.targetOPList.ToArray(),itemadd.addPercent,camp.addPercent);
             material_count mc = new material_count(m,1);
             var tree_page = TreeFrame.Content;
 
@@ -222,7 +225,7 @@ namespace PSO2_OptionalAbility_Creator
             KeyStates ctrlL = KeyStateFilter(Keyboard.GetKeyStates(Key.LeftCtrl));
             KeyStates ctrlR = KeyStateFilter(Keyboard.GetKeyStates(Key.RightCtrl));
 
-            int scale = 1;
+            //int scale = 1;
             double offset = (TreeFrame_ViewBox.Width + TreeFrame_ViewBox.Height)/20;
 
             if (ctrlL == KeyStates.Down || ctrlR == KeyStates.Down)

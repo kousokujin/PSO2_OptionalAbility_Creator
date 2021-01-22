@@ -57,7 +57,15 @@ namespace PSO2_OptionalAbility_Creator
         public material_count(material m,int count)
         {
             this.material_op_count = conveetStctList(m.material_op);
-            this.material_end_count = conveetStctList(m.material_end);
+
+            if (m.material_end != null)
+            {
+                this.material_end_count = conveetStctList(m.material_end);
+            }
+            else
+            {
+                this.material_end_count = new List<op_stct_count>();
+            }
             this.Recipes = m.Recipes;
             this.materials_childs_count = new List<material_count>();
             this.count = count;
@@ -164,6 +172,22 @@ namespace PSO2_OptionalAbility_Creator
         public op_stct2 name;  //完成品
         public List<op_stct2> materials;   //必要な素材
         public int percent;    //成功確率
+        public int AddPercent; //特殊能力追加アイテムで追加される確率
+        public int Sum_percent
+        {
+            get
+            {
+                int output = percent + AddPercent;
+                if(output > 100)
+                {
+                    return 100;
+                }
+                else
+                {
+                    return output;
+                }
+            }
+        }
     }
 
     public class op_stct_count

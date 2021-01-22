@@ -158,7 +158,7 @@ namespace PSO2_OptionalAbility_Creator
                 float x = 1.0f;
                 foreach(OP_recipe_Data r in recipe)
                 {
-                    x *= ((float)r.origin_recipe.percent/100.0f);
+                    x *= ((float)r.origin_recipe.Sum_percent/100.0f);
                 }
                 return x;
             }
@@ -207,6 +207,30 @@ namespace PSO2_OptionalAbility_Creator
             }
         }
 
+        public int getAddPercent
+        {
+            get
+            {
+                return recipe.Max(x => x.origin_recipe.AddPercent);
+
+            }
+        }
+
+        public string getAddPercent_str
+        {
+            get
+            {
+                int x = getAddPercent;
+                if(x == 0){
+                    return "なし";
+                }
+                else
+                {
+                    return string.Format("+{0}%",x);
+                }
+            }
+        }
+
         public OP_RecipiBox_Data(List<OP_Recipe2> recipe,int needcount = 1)
         {
             this.recipe =new ObservableCollection<OP_recipe_Data>();
@@ -231,7 +255,7 @@ namespace PSO2_OptionalAbility_Creator
         {
             get
             {
-                return string.Format("{0}%",origin_recipe.percent);
+                return string.Format("{0}%",origin_recipe.Sum_percent);
             }
         }
 

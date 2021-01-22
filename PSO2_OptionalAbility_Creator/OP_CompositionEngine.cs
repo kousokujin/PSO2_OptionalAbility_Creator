@@ -97,9 +97,9 @@ namespace PSO2_OptionalAbility_Creator
         /// <param name="op">素材</param>
         /// <param name="percent_Plus">確率上昇率</param>
         /// <returns>素材</returns>
-        static public (int, List<op_stct2>) GetMaterials(op_stct2 op, int percent_Plus = 0)
+        static public OP_Recipe2 GetMaterials(op_stct2 op, int percent_Plus = 0, int camp_parcent = 0)
         {
-            var comArr = RecipeDataContainer.GetOP_Recipes(op);
+            var comArr = RecipeDataContainer.GetOP_Recipes(op,camp_parcent);
             comArr = comArr.OrderBy(x => x.percent).ToList();
 
             if(comArr.Count == 0)
@@ -109,17 +109,30 @@ namespace PSO2_OptionalAbility_Creator
             }
 
             OP_Recipe2 opc = comArr[0];
+            int percent_plus_temp = 0;
+            int[] percent_plus_items = new int[] { 0, 10, 20, 30, 40, 45, 50, 55, 60 };
 
             foreach (OP_Recipe2 o in comArr)
             {
                 opc = o;
-                int p = o.percent + percent_Plus;
-                if (p >= 100)
+                foreach (int px in percent_plus_items)
                 {
-                    break;
+                    if (px <= percent_Plus) {
+
+                        int p = o.percent + px;
+                        percent_plus_temp = px;
+                        if (p >= 100)
+                        {
+                            break;
+                        }
+                    }
                 }
             }
 
+            opc.AddPercent = percent_plus_temp;
+            return opc;
+
+            /*
             List<op_stct2> op_s = new List<op_stct2>();
 
             foreach (op_stct2 name in opc.materials)
@@ -133,6 +146,7 @@ namespace PSO2_OptionalAbility_Creator
                 output_p = 100;
             }
             return (output_p, op_s);
+            */
 
         }
 
@@ -148,22 +162,24 @@ namespace PSO2_OptionalAbility_Creator
         /// ]
         /// </param>
         /// <returns></returns>
-        static public List<OP_Recipe2> GetMaterials(List<op_stct2> op, int percent_Plus = 0)
+        static public List<OP_Recipe2> GetMaterials(List<op_stct2> op, int percent_Plus = 0, int camp_parcent = 0)
         {
             List<OP_Recipe2> output_op = new List<OP_Recipe2>();
 
             foreach (op_stct2 o in op)
             {
-                var op_t = GetMaterials(o, percent_Plus);
+                var op_t = GetMaterials(o, percent_Plus,camp_parcent);
 
+                /*
                 var data = new OP_Recipe2()
                 {
                     name = o,
                     percent = op_t.Item1,
                     materials = op_t.Item2
                 };
+                */
 
-                output_op.Add(data);
+                output_op.Add(op_t);
             }
 
             return output_op;
@@ -177,11 +193,11 @@ namespace PSO2_OptionalAbility_Creator
         /// <returns>
         /// 合成成功確率,必要な素材
         /// </returns>
-        static public material SerchOP_materialBodys(op_stct2[] target, int percent_plus = 0)
+        static public material SerchOP_materialBodys(op_stct2[] target, int percent_plus = 0, int camp_parcent = 0)
         {
             List<List<op_stct2>> output_material_bodys = new List<List<op_stct2>>();
 
-            List<OP_Recipe2> output_target = GetMaterials(target.ToList(), percent_plus);
+            List<OP_Recipe2> output_target = GetMaterials(target.ToList(), percent_plus,camp_parcent);
             List<OP_Recipe_flag> need_materials = output_target.Select(x => new OP_Recipe_flag(x)).ToList();
 
             //1sでソール <= ソール+ソールみたいなのは次で無限ループになってしまう。
@@ -218,8 +234,6 @@ namespace PSO2_OptionalAbility_Creator
                         }
                     }
 
-
-
                     return new material()
                     {
                         //material_op = output_material_bodys.Select(x => add_NULL_op(target.Length, x)).ToList(),
@@ -228,9 +242,6 @@ namespace PSO2_OptionalAbility_Creator
                     };
                 }
             }
-
-            
-
 
             foreach (OP_Recipe_flag cmp in need_materials)
             {
@@ -345,8 +356,9 @@ namespace PSO2_OptionalAbility_Creator
                                     List<op_stct2> all_matel = new List<op_stct2>();
                                     foreach (op_stct2 o in output_material_bodys[material_slot])
                                     {
-                                        (int p, List<op_stct2> res_op) = GetMaterials(o);
-                                        foreach (op_stct2 reo in res_op)
+                                        //(int p, List<op_stct2> res_op) = GetMaterials(o);
+                                        OP_Recipe2 resipes = GetMaterials(o);
+                                        foreach (op_stct2 reo in resipes.materials)
                                         {
                                             all_matel.Add(reo);
                                         }
@@ -371,12 +383,24 @@ namespace PSO2_OptionalAbility_Creator
                 }
             }
 
+            //特殊能力追加をすべて同じにする
+            int targetPercent = output_target.Max(x => x.AddPercent);
+            List<OP_Recipe2> newOPRecipes = new List<OP_Recipe2>();
+            output_target.ForEach(x => newOPRecipes.Add(new OP_Recipe2()
+            {
+                materials = x.materials,
+                percent = x.percent,
+                name = x.name,
+                AddPercent = targetPercent
+            }));
+
+
 
             return new material()
             {
                 //material_op = output_material_bodys.Select(x => add_NULL_op(target.Length, x)).ToList(),
                 material_op = output_material_bodys,
-                Recipes = output_target,
+                Recipes = newOPRecipes,
                 material_end = new List<List<op_stct2>>()
             };
         }
@@ -413,10 +437,10 @@ namespace PSO2_OptionalAbility_Creator
         }
 
 
-        static public material SerchOP(op_stct2[] target, int percent_plus = 0)
+        static public material SerchOP(op_stct2[] target, int percent_plus = 0, int camp_parcent = 0)
         {
 
-            material output_mat = SerchOP_materialBodys(target, percent_plus);
+            material output_mat = SerchOP_materialBodys(target, percent_plus,camp_parcent);
 
             List<string> target_names = target.Select(x=>x.op_name).ToList();
             List<string> flatten_mat = new List<string>();
@@ -447,9 +471,9 @@ namespace PSO2_OptionalAbility_Creator
                     if(o.Count == 1)
                     {
                         int parcent = 0;
-                        (int p, List<op_stct2> mat) = GetMaterials(o[0],parcent);
+                        OP_Recipe2 mat = GetMaterials(o[0],parcent,camp_parcent);
 
-                        List<string> subOP = tools.SubList(o.Select(x => x.op_name).ToList(), mat.Select(x => x.op_name).ToList());
+                        List<string> subOP = tools.SubList(o.Select(x => x.op_name).ToList(), mat.materials.Select(x => x.op_name).ToList());
 
                         if(subOP.Count == 0)
                         {

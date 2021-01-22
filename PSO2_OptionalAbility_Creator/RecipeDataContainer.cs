@@ -14,9 +14,22 @@ namespace PSO2_OptionalAbility_Creator
             recipe_data = recipedata;
         }
 
-        static public List<OP_Recipe2> GetOP_Recipes(op_stct2 op)
+        static public List<OP_Recipe2> GetOP_Recipes(op_stct2 op,int addpercent = 0)
         {
-            return recipe_data.GetOP_Recipe(op);
+            var recipes_temp = recipe_data.GetOP_Recipe(op);
+            if(addpercent > 0)
+            {
+                var newRecipe = new List<OP_Recipe2>();
+
+                recipes_temp.ForEach(x => newRecipe.Add(new OP_Recipe2() { 
+                    name = x.name, 
+                    materials = x.materials, 
+                    percent = x.percent + addpercent ,
+                    AddPercent = x.percent
+                }));
+                return newRecipe;
+            }
+            return recipes_temp;
         }
     }
 
