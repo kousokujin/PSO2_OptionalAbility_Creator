@@ -1,0 +1,210 @@
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('1', 'soul_catalyst', 'erder_soul', 'luther_soul', 'appren_soul', 'double_soul', 'person_soul', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('2', 'astral_soul', 'soul_catalyst', 'soul_catalyst', 'soul_catalyst', 'soul_catalyst', 'darknes_soul', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('3', 'factor_catalyst', 'deus_factor', 'mother_factor', 'yamato_factor', '', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('4', 'ather_soul	', 'touou_soul', 'escard_soul', 'fullbegas_soul', '', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('5', 'ather_factor', 'ather_soul	', 'factor_catalyst', 'factor_catalyst', 'factor_catalyst', 'factor_catalyst', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('6', 'rev_catalyst', 'erder_rev', 'luther_rev', 'apren_rev', 'double_rev', 'person_rev', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('7', 'omega_memory', 'fabura_soul', 'istria_soul', 'omega_rev', '', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('8', 'mana_rev', 'omega_memory', 'rev_catalyst', 'rev_catalyst', 'rev_catalyst', 'rev_catalyst', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('9', 'fotoner_glare', 'mitra_glare', 'valna_glare', 'siva_glare', 'origin_glare', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('10', 'grea_catalyst', 'undule_glare', 'belgu_glare', 'foduls_glare', 'exel_glare', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('11', 'grea_catalyst', 'dumi_glare', 'belgu_glare', 'foduls_glare', 'exel_glare', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('12', 'absolute_glare', 'fotoner_glare', 'grea_catalyst', 'grea_catalyst', 'grea_catalyst', 'grea_catalyst', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('13', 'guardian_soul', 'astral_soul', 'ather_factor', 'mana_rev', 'absolute_glare', '', '', '10');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('14', 'none', 'none', '', '', '', '', '', '100');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('15', 'power4', 'power4', 'power4', '', '', '', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('16', 'theso_soul1', 'theso_soul1', 'theso_soul1', '', '', '', '', '50');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('17', 'theso_soul2', 'theso_soul2', 'theso_soul2', '', '', '', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('18', 'stamina4', 'stamina4', 'stamina4', '', '', '', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('19', 'supirita4', 'supirita4', 'supirita4', '', '', '', '', '60');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('20', 'erder_soul', 'erder_soul', 'erder_soul', '', '', '', '', '50');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('21', 'luther_soul', 'luther_soul', 'luther_soul', '', '', '', '', '50');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('22', 'appren_soul', 'appren_soul', 'appren_soul', '', '', '', '', '50');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('23', 'double_soul', 'double_soul', 'double_soul', '', '', '', '', '50');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('24', 'person_soul', 'person_soul', 'person_soul', '', '', '', '', '50');
+INSERT INTO "main"."OP_Recipes" ("id", "OP_Name", "material1", "material2", "material3", "material4", "material5", "material6", "percent") VALUES ('25', 'darknes_soul', 'darknes_soul', 'darknes_soul', '', '', '', '', '50');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('power1', 'power1', '100');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('shoot1', 'shoot1', '100');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('technic1', 'technic1', '100');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita1', 'supirita1', '100');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('stamina1', 'stamina1', '100');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('power2', 'power2', 'power2', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('shoot2', 'shoot2', 'shoot2', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('technic2', 'technic2', 'technic2', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('supirita2', 'supirita2', 'supirita2', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('stamina2', 'stamina2', 'stamina2','80');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('power2', 'power2', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('shoot2', 'shoot2', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('technic2', 'technic2', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita2', 'supirita2', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita2', 'supirita2', '60');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('power3', 'power3', 'power3', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('shoot3', 'shoot3', 'shoot3', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('technic3', 'technic3', 'technic3', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('supirita3', 'supirita3', 'supirita3', '80');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('stamina3', 'stamina3', 'stamina3','80');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('power3', 'power3', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('shoot3', 'shoot3', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('technic3', 'technic3', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita3', 'supirita3', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita3', 'supirita3', '60');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('power4', 'power4', 'power4', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('shoot4', 'shoot4', 'shoot4', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('technic4', 'technic4', 'technic4', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('supirita4', 'supirita4', 'supirita4', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('stamina4', 'stamina4', 'stamina4','60');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('power4', 'power4', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('shoot4', 'shoot4', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('technic4', 'technic4', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita4', 'supirita4', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('stamina4', 'stamina4', '40');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('power5', 'power5', 'power5', 'power5', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('shoot5', 'shoot5', 'shoot5', 'shoot5', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('technic5', 'technic5', 'technic5', 'technic5', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('supirita5', 'supirita5', 'supirita5','supirita5', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('stamina5', 'stamina5', 'stamina5','stamina5', '60');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('power5', 'power5', 'power5', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('shoot5', 'shoot5', 'shoot5', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('technic5', 'technic5', 'technic5', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('supirita5', 'supirita5', 'supirita5', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('stamina5', 'stamina5', 'stamina5','40');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('power5', 'power5', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('shoot5', 'shoot5', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('technic5', 'technic5', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita5', 'supirita5', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('stamina5', 'stamina5', '20');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('power6', 'power6', 'power6', 'power6', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('shoot6', 'shoot6', 'shoot6', 'shoot6', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('technic6', 'technic6', 'technic6', 'technic6', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('supirita5', 'supirita5', 'supirita5','supirita6', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('stamina6', 'stamina6', 'stamina6','stamina6', '60');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('power6', 'power6', 'power6', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('shoot6', 'shoot6', 'shoot6', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('technic6', 'technic6', 'technic6', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('supirita6', 'supirita6', 'supirita6', '40');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('stamina6', 'stamina6', 'stamina6','40');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('power6', 'power6', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('shoot6', 'shoot6', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('technic6', 'technic6', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('supirita6', 'supirita6', '20');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "percent") VALUES ('stamina6', 'stamina6', '20');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('theso_soul1', 'theso_soul1', 'theso_soul1', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('theso_soul1', 'theso_soul1', 'theso_soul1', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('act_soul', 'theso_soul1', 'theso_soul2', '70');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('til_soul', 'theso_soul1', 'theso_soul2', '70');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('magi_soul', 'theso_soul1', 'theso_soul2', '70');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ares_soul', 'theso_soul1', 'theso_soul2', '70');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('darknes_soul', 'darknes_soul', 'darknes_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('touou_soul', 'touou_soul', 'touou_soul', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('fullbegas_soul', 'fullbegas_soul', 'fullbegas_soul', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('escard_soul', 'escard_soul', 'escard_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('fabura_soul', 'fabura_soul', 'fabura_soul', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('istria_soul', 'istria_soul', 'istria_soul', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ikus_act_soul', 'ikus_act_soul', 'ikus_act_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ikus_til_soul', 'ikus_til_soul', 'ikus_til_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ikus_magi_soul', 'ikus_magi_soul', 'ikus_magi_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ikus_ares_soul', 'ikus_ares_soul', 'ikus_ares_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('gune_soul', 'gune_soul', 'gune_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('jigmol_soul', 'jigmol_soul', 'jigmol_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('guwa_soul', 'guwa_soul', 'guwa_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('quarz_soul', 'quarz_soul', 'quarz_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('deadrion_soul', 'deadrion_soul', 'deadrion_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('leone_soul', 'leone_soul', 'leone_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('beari_soul', 'beari_soul', 'beari_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ideda_soul', 'ideda_soul', 'ideda_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('madu_soul', 'madu_soul', 'madu_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ransa_soul', 'ransa_soul', 'ransa_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('fang_soul', 'fang_soul', 'fang_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('mizer_soul', 'mizer_soul', 'mizer_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('reopad_soul', 'reopad_soul', 'reopad_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('jiogu_soul', 'jiogu_soul', 'jiogu_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('grudzors_soul', 'grudzors_soul', 'grudzors_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('nept_soul', 'nept_soul', 'nept_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('jadou_soul', 'jadou_soul', 'jadou_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('lagne_soul', 'lagne_soul', 'lagne_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('volga_soul', 'volga_soul', 'volga_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('erder_soul', 'erder_soul', 'erder_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('deabo_soul', 'deabo_soul', 'deabo_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('dobars_soul', 'dobars_soul', 'dobars_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('grans_soul', 'grans_soul', 'grans_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('nyau_soul', 'nyau_soul', 'nyau_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('signo_soul', 'signo_soul', 'signo_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('chrome_soul', 'chrome_soul', 'chrome_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('rappy_soul', 'rappy_soul', 'rappy_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('sinowa_soul', 'sinowa_soul', 'sinowa_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('snow_soul', 'snow_soul', 'snow_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('rockbear_soul', 'rockbear_soul', 'rockbear_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('exs_soul', 'exs_soul', 'exs_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('marmo_soul', 'marmo_soul', 'marmo_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('person_soul', 'person_soul', 'person_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('vada_soul', 'vada_soul', 'vada_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('chata_soul', 'chata_soul', 'chata_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('shureida_soul', 'shureida_soul', 'shureida_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('goron_soul', 'goron_soul', 'goron_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('org_soul', 'org_soul', 'org_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('meduna_soul', 'meduna_soul', 'meduna_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('souma_soul', 'souma_soul', 'souma_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('ringa_soul', 'ringa_soul', 'ringa_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('luther_soul', 'luther_soul', 'luther_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('mariryuda_soul', 'mariryuda_soul', 'mariryuda_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('baru_soul', 'baru_soul', 'baru_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('bibras_soul', 'bibras_soul', 'bibras_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('tagami_soul', 'tagami_soul', 'tagami_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('riri_soul', 'riri_soul', 'riri_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('cooga_soul', 'cooga_soul', 'cooga_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('grifon_soul', 'grifon_soul', 'grifon_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('night_soul', 'night_soul', 'night_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('izane_soul', 'izane_soul', 'izane_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('anga_soul', 'anga_soul', 'anga_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('appren_soul', 'appren_soul', 'appren_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('magatsu_soul', 'magatsu_soul', 'magatsu_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('double_soul', 'double_soul', 'double_soul', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "percent") VALUES ('astral_soul', 'soul_catalyst', 'soul_catalyst', 'soul_catalyst', 'soul_catalyst', 'darknes_soul', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('ather_soul', 'touou_soul', 'escard_soul', 'fullbegas_soul', '10');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "percent") VALUES ('guardian_soul', 'astral_soul', 'ather_factor', 'mana_rev', 'absolute_glare','10');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "material5", "percent") VALUES ('soul_catalyst', 'erder_soul', 'luther_soul', 'appren_soul', 'double_soul', 'person_soul', '10');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('factor_catalyst', 'deus_factor', 'mother_factor', 'yamato_factor','10');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "material5", "percent") VALUES ('rev_catalyst', 'erder_rev', 'luther_rev', 'apren_rev', 'double_rev', 'person_rev', '10');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "percent") VALUES ('grea_catalyst', 'undule_glare', 'belgu_glare', 'foduls_glare', 'exel_glare', '10');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "percent") VALUES ('grea_catalyst', 'dumi_glare', 'belgu_glare', 'foduls_glare', 'exel_glare','10');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('deus_factor', 'deus_factor', 'deus_factor', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('mother_factor', 'mother_factor', 'mother_factor', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('yamato_factor', 'yamato_factor', 'yamato_factor', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('deus_factor', 'deus_factor', 'deus_factor', 'deus_factor', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('mother_factor', 'mother_factor', 'mother_factor', 'mother_factor', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('yamato_factor', 'yamato_factor', 'yamato_factor', 'yamato_factor', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "material5", "percent") VALUES ('ather_factor', 'ather_soul', 'factor_catalyst', 'factor_catalyst', 'factor_catalyst', 'factor_catalyst', '60');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('apren_rev', 'apren_rev', 'apren_rev', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('double_rev', 'double_rev', 'double_rev', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('erder_rev', 'erder_rev', 'erder_rev', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('luther_rev', 'luther_rev', 'luther_rev', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('omega_rev', 'omega_rev', 'omega_rev', '30');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "percent") VALUES ('person_rev', 'person_rev', 'person_rev', '30');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('apren_rev', 'apren_rev', 'apren_rev', 'apren_rev' ,'50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('double_rev', 'double_rev', 'double_rev', 'double_rev' ,'50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('erder_rev', 'erder_rev', 'erder_rev', 'erder_rev', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('luther_rev', 'luther_rev', 'luther_rev', 'luther_rev', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('omega_rev', 'omega_rev', 'omega_rev','omega_rev', '50');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('person_rev', 'person_rev', 'person_rev', 'person_rev', '50');
+
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "material4", "material5", "percent") VALUES ('mana_rev', 'omega_memory', 'rev_catalyst', 'rev_catalyst', 'rev_catalyst', 'rev_catalyst', '60');
+INSERT INTO "main"."OP_Recipes" ("OP_Name", "material1", "material2", "material3", "percent") VALUES ('omega_memory', 'fabura_soul', 'istria_soul', 'omega_rev', '10');
