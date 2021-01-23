@@ -137,7 +137,7 @@ namespace PSO2_OptionalAbility_Creator
                 sum += material.material_end_count.Count;
             }
 
-            if (material.material_end_count.Count == 0)
+            if (material.materials_childs_count.Count == 0 && material.material_end_count.Count == 0)
             {
                 if (material.material_op_count.Count == 0)
                 {

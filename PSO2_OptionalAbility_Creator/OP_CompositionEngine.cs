@@ -476,10 +476,10 @@ namespace PSO2_OptionalAbility_Creator
         }
 
 
-        static public material SerchOP(op_stct2[] target, int percent_plus = 0, int camp_parcent = 0)
+        static public material SerchOP(op_stct2[] target, int percent_plus = 0, int camp_percent = 0)
         {
 
-            material output_mat = SerchOP_materialBodys(target, percent_plus,camp_parcent);
+            material output_mat = SerchOP_materialBodys(target, percent_plus,camp_percent);
             //エラー時
             if(output_mat.error != "")
             {
@@ -516,7 +516,7 @@ namespace PSO2_OptionalAbility_Creator
                     if(o.Count == 1)
                     {
                         int parcent = 0;
-                        OP_Recipe2 mat = GetMaterials(o[0],parcent,camp_parcent);
+                        OP_Recipe2 mat = GetMaterials(o[0],parcent,camp_percent);
 
                         List<string> subOP = tools.SubList(o.Select(x => x.op_name).ToList(), mat.materials.Select(x => x.op_name).ToList());
 
@@ -527,7 +527,7 @@ namespace PSO2_OptionalAbility_Creator
                         }
                     }
 
-                    material m = SerchOP(o.ToArray(), percent_plus);
+                    material m = SerchOP(o.ToArray(), percent_plus,camp_percent);
                     output_mat.material_childs.Add(m);
                 }
             }
