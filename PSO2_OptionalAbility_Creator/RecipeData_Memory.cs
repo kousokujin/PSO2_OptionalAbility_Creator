@@ -50,7 +50,8 @@ namespace PSO2_OptionalAbility_Creator
                 name = out_name,
                 materials = out_marteials,
                 percent = out_percent,
-                AddPercent = 0
+                AddPercent = 0,
+                noRecipe = false
             };
 
             op_recipes.Add(recp);

@@ -139,7 +139,14 @@ namespace PSO2_OptionalAbility_Creator
 
             if (material.material_end_count.Count == 0)
             {
-                return material.material_op_count.Count;
+                if (material.material_op_count.Count == 0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return material.material_op_count.Count;
+                }
             }
 
             return sum;

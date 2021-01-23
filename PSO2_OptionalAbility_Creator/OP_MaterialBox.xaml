@@ -16,7 +16,7 @@
     <Border BorderThickness="1" BorderBrush="{Binding boarder_color}">
         <Grid>
             <Label Content="成功率" Margin="10,10,10,0" VerticalAlignment="Top" Padding="0,5,5,5"/>
-            <Label Margin="10,36,93,0" VerticalAlignment="Top" Height="40" FontSize="25" Padding="0,0,0,4" Content="{Binding getRaito_str}"/>
+            <Label Margin="10,36,89,0" VerticalAlignment="Top" Height="40" FontSize="25" Padding="0,0,0,4" Content="{Binding getRaito_str}"/>
             <ListBox x:Name="OP_ListBox" Margin="10,82,10,30" VerticalContentAlignment="Top" ItemsSource="{Binding recipe}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -29,8 +29,8 @@
             </ListBox>
             <Label Content="必要数" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Bottom" Padding="0,0,5,0" Height="25" FontSize="18"/>
             <Label x:Name="NeedCountLabel" Content="{Binding needcount_str}" HorizontalAlignment="Left" Margin="69,0,0,5" Width="119" Padding="5,0,0,0" Height="25" VerticalAlignment="Bottom" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Right" FontSize="18"/>
-            <Label Content="特殊能力追加" HorizontalAlignment="Left" Margin="110,36,0,0" VerticalAlignment="Top" Width="78" Height="16" Padding="0"/>
-            <Label x:Name="ItemAddPercent_Label" Content="{Binding getAddPercent_str}" HorizontalAlignment="Left" Margin="110,52,0,0" VerticalAlignment="Top" Width="78" Padding="0" Height="24" FontSize="18"/>
+            <Label Content="特殊能力追加" HorizontalAlignment="Left" Margin="114,36,0,0" VerticalAlignment="Top" Width="74" Height="16" Padding="0"/>
+            <Label x:Name="ItemAddPercent_Label" Content="{Binding getAddPercent_str}" HorizontalAlignment="Left" Margin="114,52,0,0" VerticalAlignment="Top" Width="74" Padding="0" Height="24" FontSize="18"/>
         </Grid>
     </Border>
 </UserControl>

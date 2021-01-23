@@ -197,8 +197,39 @@ namespace PSO2_OptionalAbility_Creator
         {
             List<List<op_stct2>> output_material_bodys = new List<List<op_stct2>>();
 
-            List<OP_Recipe2> output_target = GetMaterials(target.ToList(), percent_plus,camp_parcent);
+            List<OP_Recipe2> output_target = GetMaterials(target.ToList(), percent_plus, camp_parcent);
             List<OP_Recipe_flag> need_materials = output_target.Select(x => new OP_Recipe_flag(x)).ToList();
+
+
+            //レシピがない場合はおわり
+            bool exist_recipe_flag = output_target.All(x => (x.name.op_name != "none"));
+
+            if (exist_recipe_flag == false)
+            {
+                List<OP_Recipe2> notexistrecipe = new List<OP_Recipe2>();
+                foreach(op_stct2 t in target)
+                {
+                    OP_Recipe2 newrecipe = new OP_Recipe2()
+                    {
+                        name = t,
+                        materials = new List<op_stct2>(),
+                        percent = 100,
+                        AddPercent = 0,
+                        noRecipe = true
+                    };
+
+                    notexistrecipe.Add(newrecipe);
+                }
+
+                return new material()
+                {
+                    material_op = new List<List<op_stct2>>(),
+                    material_end = new List<List<op_stct2>>(),
+                    Recipes = notexistrecipe,
+                    error = "RECIPE_NOT_EXIST"
+                };
+            }
+
 
             //1sでソール <= ソール+ソールみたいなのは次で無限ループになってしまう。
 
@@ -234,12 +265,14 @@ namespace PSO2_OptionalAbility_Creator
                         }
                     }
 
-                    return new material()
+                    return (new material()
                     {
                         //material_op = output_material_bodys.Select(x => add_NULL_op(target.Length, x)).ToList(),
                         material_op = output_material_bodys,
-                        Recipes = output_target
-                    };
+                        material_end = new List<List<op_stct2>>(),
+                        Recipes = output_target,
+                        error = ""
+                    });
                 }
             }
 
@@ -313,8 +346,13 @@ namespace PSO2_OptionalAbility_Creator
                                     loopa = false;
 
                                     //op付不可なのでとりあえず空き配列でも返す
-                                    
-                                    return new material() { material_op = new List<List<op_stct2>>(), Recipes = output_target };
+                                    //レシピ変更して再試行したい
+                                    return new material() { 
+                                        material_op = new List<List<op_stct2>>(),
+                                        material_end = new List<List<op_stct2>>(),
+                                        Recipes = output_target,
+                                        error="NOT_RECIPE_MARGE",
+                                    };
                                 }
                             }
                             else
@@ -367,7 +405,7 @@ namespace PSO2_OptionalAbility_Creator
                                     List<op_stct2> next_dupOP = checkOP(all_matel);
                                     List<int> next_dupSer = seriseCount(next_dupOP);
 
-                                    if (next_dupSer.Max() > 6)
+                                    if (next_dupSer.Count != 0 && next_dupSer.Max() > 6)
                                     {
                                         output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
                                         material_slot++;
@@ -401,7 +439,8 @@ namespace PSO2_OptionalAbility_Creator
                 //material_op = output_material_bodys.Select(x => add_NULL_op(target.Length, x)).ToList(),
                 material_op = output_material_bodys,
                 Recipes = newOPRecipes,
-                material_end = new List<List<op_stct2>>()
+                material_end = new List<List<op_stct2>>(),
+                error = ""
             };
         }
 
@@ -441,6 +480,12 @@ namespace PSO2_OptionalAbility_Creator
         {
 
             material output_mat = SerchOP_materialBodys(target, percent_plus,camp_parcent);
+            //エラー時
+            if(output_mat.error != "")
+            {
+                return output_mat;
+            }
+
 
             List<string> target_names = target.Select(x=>x.op_name).ToList();
             List<string> flatten_mat = new List<string>();

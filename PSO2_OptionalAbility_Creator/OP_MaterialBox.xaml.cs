@@ -168,7 +168,16 @@ namespace PSO2_OptionalAbility_Creator
         {
             get
             {
-                return string.Format("{0:P}",getRaito);
+                bool ExistRecipe = recipe.All(b => (b.origin_recipe.noRecipe == false));
+
+                if (ExistRecipe == true)
+                {
+                    return string.Format("{0:P}", getRaito);
+                }
+                else
+                {
+                    return "合成不可";
+                }
             }
         }
 
@@ -176,6 +185,13 @@ namespace PSO2_OptionalAbility_Creator
         {
             get
             {
+                bool ExistRecipe = recipe.All(b => (b.origin_recipe.noRecipe == false));
+
+                if(ExistRecipe == false)
+                {
+                    return "#FFFFFFFF";
+                }
+
                 float percent = getRaito;
 
                 if (percent >= 1.0)
@@ -255,7 +271,14 @@ namespace PSO2_OptionalAbility_Creator
         {
             get
             {
-                return string.Format("{0}%",origin_recipe.Sum_percent);
+                if (origin_recipe.noRecipe == false)
+                {
+                    return string.Format("{0}%", origin_recipe.Sum_percent);
+                }
+                else
+                {
+                    return "合成不可";
+                }
             }
         }
 

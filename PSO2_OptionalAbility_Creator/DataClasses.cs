@@ -12,6 +12,7 @@ namespace PSO2_OptionalAbility_Creator
         public List<List<op_stct2>> material_end; //マイショップで買うOP
         public List<material> material_childs;
         public List<OP_Recipe2> Recipes;
+        public string error;
 
         public material()
         {
@@ -47,6 +48,30 @@ namespace PSO2_OptionalAbility_Creator
             }
         }
 
+        public new List<material> material_childs
+        {
+            get
+            {
+                List<material> output = new List<material>();
+
+                foreach(material_count c in materials_childs_count)
+                {
+                    for(int i = 0; i < c.count; i++)
+                    {
+                        material m = new material()
+                        {
+                            material_op = c.material_op,
+                            material_end = c.material_end,
+                            Recipes = c.Recipes,
+                            material_childs = c.material_childs
+                        };
+                    }
+                }
+
+                return output;
+            }
+        }
+
         public List<material_count> materials_childs_count;
         public int count;
         public List<op_stct_count> material_op_count;
@@ -57,7 +82,9 @@ namespace PSO2_OptionalAbility_Creator
         public material_count(material m,int count)
         {
             this.material_op_count = conveetStctList(m.material_op);
+            this.material_end_count = conveetStctList(m.material_end);
 
+            /*
             if (m.material_end != null)
             {
                 this.material_end_count = conveetStctList(m.material_end);
@@ -66,6 +93,7 @@ namespace PSO2_OptionalAbility_Creator
             {
                 this.material_end_count = new List<op_stct_count>();
             }
+            */
             this.Recipes = m.Recipes;
             this.materials_childs_count = new List<material_count>();
             this.count = count;
@@ -173,6 +201,7 @@ namespace PSO2_OptionalAbility_Creator
         public List<op_stct2> materials;   //必要な素材
         public int percent;    //成功確率
         public int AddPercent; //特殊能力追加アイテムで追加される確率
+        public bool noRecipe;   //存在しないレシピ
         public int Sum_percent
         {
             get
