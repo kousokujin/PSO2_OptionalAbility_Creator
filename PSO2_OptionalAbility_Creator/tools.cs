@@ -150,6 +150,29 @@ namespace PSO2_OptionalAbility_Creator
             }
 
             return sum;
+        }
+
+        public static int CountMaxSlot(material_count material)
+        {
+            int maxslot = 0;
+
+            int slot = material.Recipes.Count;
+            if(maxslot < slot)
+            {
+                maxslot = slot;
+            }
+
+            foreach(material_count m in material.materials_childs_count)
+            {
+                int slot_temp = CountMaxSlot(m);
+
+                if(slot_temp > maxslot)
+                {
+                    maxslot = slot_temp;
+                }
+            }
+
+            return maxslot;
 
         }
     }
