@@ -71,6 +71,7 @@
     <Compile Include="MemorySQL_Load.cs" />
     <Compile Include="OPData_Memory.cs" />
     <Compile Include="OP_CompositionEngine.cs" />
+    <Compile Include="OP_CompositionEngine2.cs" />
     <Compile Include="OP_MaterialBox.xaml.cs">
       <DependentUpon>OP_MaterialBox.xaml</DependentUpon>
     </Compile>

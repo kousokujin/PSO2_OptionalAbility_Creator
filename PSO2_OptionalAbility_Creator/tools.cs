@@ -175,5 +175,33 @@ namespace PSO2_OptionalAbility_Creator
             return maxslot;
 
         }
+
+        //重複したOPを削除して返す
+        /*
+        public static List<op_stct2> DupOP_Stct(List<op_stct2> ops)
+        {
+            List<op_stct2> outputList = new List<op_stct2>();
+
+            foreach(op_stct2 o in ops)
+            {
+                bool isExist = false;
+                foreach(op_stct2 x in outputList)
+                {
+                    if(o.op_name == x.op_name)
+                    {
+                        isExist = true;
+                    }
+                }
+
+                if(isExist == false)
+                {
+                    outputList.Add(o);
+                }
+            }
+
+            return outputList;
+
+        }
+        */
     }
 }
