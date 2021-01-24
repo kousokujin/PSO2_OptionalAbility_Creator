@@ -97,9 +97,10 @@ namespace PSO2_OptionalAbility_Creator
         /// <param name="op">素材</param>
         /// <param name="percent_Plus">確率上昇率</param>
         /// <returns>素材</returns>
-        static public OP_Recipe2 GetMaterials(op_stct2 op, int percent_Plus = 0, int camp_parcent = 0)
+        static public List<OP_Recipe2> GetMaterials(op_stct2 op, int percent_Plus = 0, int camp_parcent = 0)
         {
             var comArr = RecipeDataContainer.GetOP_Recipes(op,camp_parcent);
+            //成功率が低い順にソートしているが、priorityを設定して高い順にしたい
             comArr = comArr.OrderBy(x => x.percent).ToList();
 
             if(comArr.Count == 0)
@@ -108,13 +109,13 @@ namespace PSO2_OptionalAbility_Creator
                 return GetMaterials(OPDataContainer.GetOP_Stct("none"));
             }
 
-            OP_Recipe2 opc = comArr[0];
-            int percent_plus_temp = 0;
-            int[] percent_plus_items = new int[] { 0, 10, 20, 30, 40, 45, 50, 55, 60 };
+            List<OP_Recipe2> opc = new List<OP_Recipe2>();
 
             foreach (OP_Recipe2 o in comArr)
             {
-                opc = o;
+                int percent_plus_temp = 0;
+                int[] percent_plus_items = new int[] { 0, 10, 20, 30, 40, 45, 50, 55, 60 };
+
                 foreach (int px in percent_plus_items)
                 {
                     if (px <= percent_Plus) {
@@ -127,9 +128,21 @@ namespace PSO2_OptionalAbility_Creator
                         }
                     }
                 }
+
+                int p_temp = o.percent + percent_plus_temp;
+                if(p_temp > 100)
+                {
+                    p_temp = 100;
+                }
+
+                opc.Add(new OP_Recipe2() { name = o.name, percent = p_temp, materials = o.materials, AddPercent = percent_Plus, noRecipe = false });
+
             }
 
-            opc.AddPercent = percent_plus_temp;
+            //成功率を高い順に変える
+            opc.Reverse();
+
+            //opc.AddPercent = percent_plus_temp;
             return opc;
 
             /*
@@ -162,9 +175,9 @@ namespace PSO2_OptionalAbility_Creator
         /// ]
         /// </param>
         /// <returns></returns>
-        static public List<OP_Recipe2> GetMaterials(List<op_stct2> op, int percent_Plus = 0, int camp_parcent = 0)
+        static public List<List<OP_Recipe2>> GetMaterials(List<op_stct2> op, int percent_Plus = 0, int camp_parcent = 0)
         {
-            List<OP_Recipe2> output_op = new List<OP_Recipe2>();
+            List<List<OP_Recipe2>> output_op = new List<List<OP_Recipe2>>();
 
             foreach (op_stct2 o in op)
             {
@@ -196,13 +209,22 @@ namespace PSO2_OptionalAbility_Creator
         static public material SerchOP_materialBodys(op_stct2[] target, int percent_plus = 0, int camp_parcent = 0)
         {
             List<List<op_stct2>> output_material_bodys = new List<List<op_stct2>>();
+            List<List<int>> output_material_index = new List<List<int>>();
 
-            List<OP_Recipe2> output_target = GetMaterials(target.ToList(), percent_plus, camp_parcent);
-            List<OP_Recipe_flag> need_materials = output_target.Select(x => new OP_Recipe_flag(x)).ToList();
+            List<List<OP_Recipe2>> output_target = GetMaterials(target.ToList(), percent_plus, camp_parcent);
+            List<List<OP_Recipe_flag>> need_materials = new List<List<OP_Recipe_flag>>();
+            List<int> recipe_index = new List<int>();   //何番目のレシピを使うか
+
+            foreach(List<OP_Recipe2> oprecipe in output_target)
+            {
+                need_materials.Add(oprecipe.Select(x=>new OP_Recipe_flag(x)).ToList());
+                recipe_index.Add(0);
+            }
 
 
             //レシピがない場合はおわり
-            bool exist_recipe_flag = output_target.All(x => (x.name.op_name != "none"));
+            //一番最初の配列を参照してるのは仮
+            bool exist_recipe_flag = output_target[0].All(x => (x.name.op_name != "none"));
 
             if (exist_recipe_flag == false)
             {
@@ -236,7 +258,7 @@ namespace PSO2_OptionalAbility_Creator
             if (target.Length == 1)
             {
                 List<bool> commonOP = new List<bool>();
-                foreach (OP_Recipe2 r in output_target)
+                foreach (OP_Recipe2 r in output_target[0])
                 {
                     bool fg = true;
 
@@ -253,66 +275,96 @@ namespace PSO2_OptionalAbility_Creator
 
                 if (commonOP.All(x => (x == true)))
                 {
-                    foreach (OP_Recipe2 r in output_target)
+                    //List<OP_Recipe2> select_recipe = output_target[0];
+
+                    foreach(List<OP_Recipe2> selected_recipe in output_target)
                     {
-                        foreach ((op_stct2 x, int i) in r.materials.Select((x, i) => (x, i)))
+                        foreach((op_stct2 op,int idx)in selected_recipe[0].materials.Select((x,i)=>(x,i)))
                         {
-                            if (output_material_bodys.Count < (i + 1))
+                            if(output_material_bodys.Count < idx + 1)
                             {
                                 output_material_bodys.Add(new List<op_stct2>());
                             }
-                            output_material_bodys[i].Add(x);
+
+                            output_material_bodys[idx].Add(op);
                         }
                     }
+
 
                     return (new material()
                     {
                         //material_op = output_material_bodys.Select(x => add_NULL_op(target.Length, x)).ToList(),
                         material_op = output_material_bodys,
                         material_end = new List<List<op_stct2>>(),
-                        Recipes = output_target,
+                        Recipes = new List<OP_Recipe2>() { output_target[0][0]},
                         error = ""
                     });
                 }
             }
 
-            foreach (OP_Recipe_flag cmp in need_materials)
+            foreach ((List<OP_Recipe_flag> cmplist,int idx) in need_materials.Select((x,i)=>(x,i)).ToList())
             {
 
-                foreach (OP_stct_flag osf in cmp.materials)
+                bool nextRecipe = true;
+
+                do
                 {
-                    if (osf.flag == false)
+                    OP_Recipe_flag cmp = cmplist[recipe_index[idx]];
+                    foreach (OP_stct_flag osf in cmp.materials)
                     {
-                        int material_slot = 0;
-
-                        bool loopa = true;
-                        while (loopa == true)
+                        if (osf.flag == false && nextRecipe == true)
                         {
-                            if (output_material_bodys.Count > material_slot == false)
+                            int material_slot = 0;
+                            nextRecipe = true;
+
+                            bool loopa = true;
+                            while (loopa == true)
                             {
-                                output_material_bodys.Add(new List<op_stct2>());
-                            }
-
-                            var isExist_OP = output_material_bodys[material_slot].Where(x => (x.op_name == osf.op_name)).ToList();
-                            int slot_count = output_material_bodys[material_slot].Count();
-
-
-                            if (isExist_OP.Count == 0)
-                            {
-                                //output_material_bodysの一番最初は素体なので、OPスロ数注意
-                                if (material_slot == 0)
+                                if (output_material_bodys.Count > material_slot == false)
                                 {
-                                    if (slot_count <= target.Length)
+                                    output_material_bodys.Add(new List<op_stct2>());
+                                    output_material_index.Add(new List<int>());
+                                }
+
+                                var isExist_OP = output_material_bodys[material_slot].Where(x => (x.op_name == osf.op_name)).ToList();
+                                int slot_count = output_material_bodys[material_slot].Count();
+
+
+                                if (isExist_OP.Count == 0)
+                                {
+                                    //output_material_bodysの一番最初は素体なので、OPスロ数注意
+                                    if (material_slot == 0)
                                     {
-                                        //output_material_bodys[material_slot].Add(OP_Datas.options[osf.op_name]);
+                                        if (slot_count <= target.Length)
+                                        {
+                                            //output_material_bodys[material_slot].Add(OP_Datas.options[osf.op_name]);
+                                            output_material_bodys[material_slot].Add(OPDataContainer.GetOP_Stct(osf.op_name));
+                                            output_material_index[material_slot].Add(idx);
+
+                                            List<op_stct2> dupOP = checkOP(output_material_bodys[material_slot]);
+
+
+                                            if (dupOP.Count > 0)
+                                            {
+                                                output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
+                                                output_material_index[material_slot].RemoveAt(output_material_index[material_slot].Count - 1);
+                                            }
+                                            else
+                                            {
+                                                loopa = false;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
                                         output_material_bodys[material_slot].Add(OPDataContainer.GetOP_Stct(osf.op_name));
-
+                                        output_material_index[material_slot].Add(idx);
                                         List<op_stct2> dupOP = checkOP(output_material_bodys[material_slot]);
-
 
                                         if (dupOP.Count > 0)
                                         {
                                             output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
+                                            output_material_index[material_slot].RemoveAt(output_material_index[material_slot].Count - 1);
                                         }
                                         else
                                         {
@@ -320,111 +372,144 @@ namespace PSO2_OptionalAbility_Creator
                                         }
                                     }
                                 }
-                                else
-                                {
-                                    output_material_bodys[material_slot].Add(OPDataContainer.GetOP_Stct(osf.op_name));
-                                    List<op_stct2> dupOP = checkOP(output_material_bodys[material_slot]);
 
-                                    if (dupOP.Count > 0)
-                                    {
-                                        output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
-                                    }
-                                    else
+                                if (loopa == true)
+                                {
+                                    material_slot++;
+
+                                    //8スロ以上になったら
+                                    if (material_slot > 5)
                                     {
                                         loopa = false;
-                                    }
-                                }
-                            }
+                                        nextRecipe = false;
 
-                            if (loopa == true)
-                            {
-                                material_slot++;
+                                        List<OP_Recipe2> output_recipe = new List<OP_Recipe2>();
+                                        output_target.ForEach(x => output_recipe.Add(x[0]));
 
-                                //8スロ以上になったら
-                                if (material_slot > 5)
-                                {
-                                    loopa = false;
+                                        recipe_index[idx]++;
 
-                                    //op付不可なのでとりあえず空き配列でも返す
-                                    //レシピ変更して再試行したい
-                                    return new material() { 
-                                        material_op = new List<List<op_stct2>>(),
-                                        material_end = new List<List<op_stct2>>(),
-                                        Recipes = output_target,
-                                        error="NOT_RECIPE_MARGE",
-                                    };
-                                }
-                            }
-                            else
-                            {
-                                //素材のOP数がほしいOP数と同数以上じゃないと同じOPにはならない
-                                if (target.Length <= output_material_bodys[material_slot].Count) {
-                                    //ほしいOP構成と同じOP構成の素材ができたらmaterial_slot+1
-                                    List<bool> isExist = new List<bool>();
-
-                                    foreach (var t in target)
-                                    {
-                                        isExist.Add(false);
-                                    }
-
-                                    foreach ((var t, int i) in target.Select((val, i) => (val, i)))
-                                    {
-                                        foreach (var x in output_material_bodys[material_slot])
+                                        if (need_materials[idx].Count < recipe_index[idx] + 1)
                                         {
-                                            if (t.op_name == x.op_name)
+                                            //作成不可
+                                            return new material()
                                             {
-                                                isExist[i] = true;
+                                                material_op = new List<List<op_stct2>>(),
+                                                material_end = new List<List<op_stct2>>(),
+                                                Recipes = output_recipe,
+                                                error = "NOT_RECIPE_MARGE",
+                                            };
+                                        }
+
+                                        //やり直し
+                                        foreach ((List<int> istI, int i) in output_material_index.Select((x, i) => (x, i))){
+                                            foreach ((int lstJ, int j) in istI.Select((x, j) => (x, j)))
+                                            {
+                                                if (lstJ == idx)
+                                                {
+                                                    output_material_bodys[i].RemoveAt(j);
+                                                }
                                             }
                                         }
-                                    }
 
-                                    //ほしいOP構成と同じOP構成の素材ができている場合
-                                    if (isExist.All(x => (x == true)) == true)
-                                    {
-                                        output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
-                                        material_slot++;
-                                        loopa = true;
+                                        foreach ((List<int> istI, int i) in output_material_index.Select((x, i) => (x, i)))
+                                        {
+                                            istI.RemoveAt(idx);
+                                        }
+
+
+
+                                        //op付不可なのでとりあえず空き配列でも返す
+                                        //レシピ変更して再試行したい
+                                        /*
+                                        return new material()
+                                        {
+                                            material_op = new List<List<op_stct2>>(),
+                                            material_end = new List<List<op_stct2>>(),
+                                            Recipes = output_recipe,
+                                            error = "NOT_RECIPE_MARGE",
+                                        };
+                                        */
                                     }
                                 }
-
-
-                                //素材の素材を作るのに必要な素材数を調べる
-                                if (output_material_bodys.Count() > material_slot)
+                                else
                                 {
-                                    List<op_stct2> all_matel = new List<op_stct2>();
-                                    foreach (op_stct2 o in output_material_bodys[material_slot])
+                                    //素材のOP数がほしいOP数と同数以上じゃないと同じOPにはならない
+                                    if (target.Length <= output_material_bodys[material_slot].Count)
                                     {
-                                        //(int p, List<op_stct2> res_op) = GetMaterials(o);
-                                        OP_Recipe2 resipes = GetMaterials(o);
-                                        foreach (op_stct2 reo in resipes.materials)
+                                        //ほしいOP構成と同じOP構成の素材ができたらmaterial_slot+1
+                                        List<bool> isExist = new List<bool>();
+
+                                        foreach (var t in target)
                                         {
-                                            all_matel.Add(reo);
+                                            isExist.Add(false);
+                                        }
+
+                                        foreach ((var t, int i) in target.Select((val, i) => (val, i)))
+                                        {
+                                            foreach (var x in output_material_bodys[material_slot])
+                                            {
+                                                if (t.op_name == x.op_name)
+                                                {
+                                                    isExist[i] = true;
+                                                }
+                                            }
+                                        }
+
+                                        //ほしいOP構成と同じOP構成の素材ができている場合
+                                        if (isExist.All(x => (x == true)) == true)
+                                        {
+                                            output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
+                                            output_material_index[material_slot].RemoveAt(output_material_index[material_slot].Count - 1);
+                                            material_slot++;
+                                            loopa = true;
                                         }
                                     }
 
-                                    List<op_stct2> next_dupOP = checkOP(all_matel);
-                                    List<int> next_dupSer = seriseCount(next_dupOP);
 
-                                    if (next_dupSer.Count != 0 && next_dupSer.Max() > 6)
+                                    //素材の素材を作るのに必要な素材数を調べる
+                                    if (output_material_bodys.Count() > material_slot)
                                     {
-                                        output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
-                                        material_slot++;
-                                        loopa = true;
-                                    }
-                                }
+                                        List<op_stct2> all_matel = new List<op_stct2>();
+                                        foreach (op_stct2 o in output_material_bodys[material_slot])
+                                        {
+                                            //(int p, List<op_stct2> res_op) = GetMaterials(o);
+                                            OP_Recipe2 resipes = GetMaterials(o)[0];
+                                            foreach (op_stct2 reo in resipes.materials)
+                                            {
+                                                all_matel.Add(reo);
+                                            }
+                                        }
 
+                                        List<op_stct2> next_dupOP = checkOP(all_matel);
+                                        List<int> next_dupSer = seriseCount(next_dupOP);
+
+                                        if (next_dupSer.Count != 0 && next_dupSer.Max() > 6)
+                                        {
+                                            output_material_bodys[material_slot].RemoveAt(output_material_bodys[material_slot].Count - 1);
+                                            output_material_index[material_slot].RemoveAt(output_material_index[material_slot].Count - 1);
+                                            material_slot++;
+                                            loopa = true;
+                                        }
+                                    }
+
+                                }
                             }
 
                         }
-
                     }
-                }
+                }while (nextRecipe == false);
             }
 
             //特殊能力追加をすべて同じにする
-            int targetPercent = output_target.Max(x => x.AddPercent);
+            List<OP_Recipe2> selectedRecipes = new List<OP_Recipe2>();
+            foreach((List<OP_Recipe2> recipe,int i) in output_target.Select((x, i) => (x, i))){
+                selectedRecipes.Add(recipe[recipe_index[i]]);
+            }
+
+
+            int targetPercent = selectedRecipes.Max(x => x.AddPercent);
             List<OP_Recipe2> newOPRecipes = new List<OP_Recipe2>();
-            output_target.ForEach(x => newOPRecipes.Add(new OP_Recipe2()
+            selectedRecipes.ForEach(x => newOPRecipes.Add(new OP_Recipe2()
             {
                 materials = x.materials,
                 percent = x.percent,
@@ -516,7 +601,7 @@ namespace PSO2_OptionalAbility_Creator
                     if(o.Count == 1)
                     {
                         int parcent = 0;
-                        OP_Recipe2 mat = GetMaterials(o[0],parcent,camp_percent);
+                        OP_Recipe2 mat = GetMaterials(o[0],parcent,camp_percent)[0];
 
                         List<string> subOP = tools.SubList(o.Select(x => x.op_name).ToList(), mat.materials.Select(x => x.op_name).ToList());
 
