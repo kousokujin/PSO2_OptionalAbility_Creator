@@ -22,6 +22,7 @@ namespace PSO2_OptionalAbility_Creator
     {
         //material material = null;
         int material_slot = 0;
+        int max_slot = 0;
 
         List<OP_MaterialBox> material_boxs;
         List<Material_StartBox> material_start;
@@ -58,12 +59,13 @@ namespace PSO2_OptionalAbility_Creator
             ClearDisplay();
 
             material_slot = m.Recipes.Count;
+            max_slot = tools.CountMaxSlot(m);
             Material_Level(m, 0);
 
             //var box = ShowMaterialTree(m, 0);
 
             int ChildCout = tools.CountMaterial(m);
-            (this.Width, this.Height) = PageWidthHeight(m.Recipes.Count,ChildCout);
+            (this.Width, this.Height) = PageWidthHeight(max_slot,ChildCout);
             ShowMaterialTree2(m, ChildCout);
 
             //EventBox.ForEach(x => x.forceEvent());
@@ -76,6 +78,7 @@ namespace PSO2_OptionalAbility_Creator
             material_levels.Clear();
             showLevel_Temp.Clear();
             material_slot = 0;
+            max_slot = 0;
 
             foreach(OP_MaterialBox m in material_boxs)
             {
@@ -133,7 +136,7 @@ namespace PSO2_OptionalAbility_Creator
                 Path p = new Path();
                 p.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
                 p.StrokeThickness = 2;
-                string geoStr = string.Format("M{0},{1} L{2},{3}", windowX + BoxWidth / 2, windowY+BoxHeight,childX,childY);
+                string geoStr = string.Format("M{0},{1} L{2},{3}", windowX + BoxWidth / 2, windowY+matBox.Height,childX,childY);
                 p.Data = Geometry.Parse(geoStr);
                 childBox.path = p;
                 main_grid.Children.Add(p);
@@ -141,14 +144,14 @@ namespace PSO2_OptionalAbility_Creator
 
             if(m.material_end_count != null && m.material_end_count.Count != 0)
             {
-                MaterialBoxPut(m.material_end_count, Width, all_material, shift2, level, windowX, windowY);
+                MaterialBoxPut(m.material_end_count, Width, all_material, shift2, level, windowX, windowY,matBox.Height);
             }
 
 
             //末端ノードのみだと思う
             if (m.materials_childs_count.Count == 0)
             {
-                MaterialBoxPut(m.material_op_count, Width, all_material, shift, level, windowX, windowY);
+                MaterialBoxPut(m.material_op_count, Width, all_material, shift, level, windowX, windowY,matBox.Height);
                 /*
                 double dw = width_fix / all_material;
                 double x = Width_margin+(dw * shift);
@@ -178,7 +181,7 @@ namespace PSO2_OptionalAbility_Creator
 
         }
 
-        private void MaterialBoxPut(List<op_stct_count> opList,double width_fix,int all_material,double shift,int level,double windowX,double windowY)
+        private void MaterialBoxPut(List<op_stct_count> opList,double width_fix,int all_material,double shift,int level,double windowX,double windowY,double windowHeight)
         {
             double dw = width_fix / all_material;
             double x = Width_margin + (dw * shift);
@@ -193,7 +196,7 @@ namespace PSO2_OptionalAbility_Creator
                 Path p = new Path();
                 p.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
                 p.StrokeThickness = 2;
-                string geoStr = string.Format("M{0},{1} L{2},{3}", windowX + BoxWidth / 2, windowY + BoxHeight, x + BoxWidth / 2, y);
+                string geoStr = string.Format("M{0},{1} L{2},{3}", windowX + BoxWidth / 2, windowY + windowHeight, x + BoxWidth / 2, y);
                 p.Data = Geometry.Parse(geoStr);
                 opBox.path = p;
                 main_grid.Children.Add(p);
