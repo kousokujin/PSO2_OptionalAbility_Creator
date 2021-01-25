@@ -7,7 +7,7 @@ using System.Data.SQLite;
 
 namespace PSO2_OptionalAbility_Creator
 {
-    class RecipeData_Memory : MemorySQL_Load, IRecipeContainer
+    public class RecipeData_Memory : MemorySQL_Load, IRecipeContainer
     {
         static public List<OP_Recipe2> op_recipes;
 

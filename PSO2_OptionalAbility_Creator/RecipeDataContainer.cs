@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSO2_OptionalAbility_Creator
 {
-    class RecipeDataContainer
+    public class RecipeDataContainer
     {
         static IRecipeContainer recipe_data;
         public RecipeDataContainer(IRecipeContainer recipedata)
@@ -33,7 +33,7 @@ namespace PSO2_OptionalAbility_Creator
         }
     }
 
-    class OPDataContainer
+    public class OPDataContainer
     {
         static IOPContainer op_Data;
         public OPDataContainer(IOPContainer opdata)
@@ -54,7 +54,7 @@ namespace PSO2_OptionalAbility_Creator
        
     }
 
-    interface IRecipeContainer
+    public interface IRecipeContainer
     {
         /// <summary>
         /// opに指定されたレシピを返す
@@ -65,7 +65,7 @@ namespace PSO2_OptionalAbility_Creator
 
     }
 
-    interface IOPContainer
+    public interface IOPContainer
     {
         op_stct2 GetOP_Stct(string op_name);
         List<op_stct2> GetAllOPStct();

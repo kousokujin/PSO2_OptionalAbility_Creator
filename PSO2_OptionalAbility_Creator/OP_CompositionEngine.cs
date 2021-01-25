@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSO2_OptionalAbility_Creator
 {
-    class OP_CompositionEngine
+    public class OP_CompositionEngine
     {
         OPDataContainer opdataContainer;
         RecipeDataContainer recipeDataContainer;

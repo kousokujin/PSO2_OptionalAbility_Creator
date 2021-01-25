@@ -7,7 +7,7 @@ using System.Data.SQLite;
 
 namespace PSO2_OptionalAbility_Creator
 {
-    abstract class MemorySQL_Load
+    public abstract class MemorySQL_Load
     {
         SQLiteConnectionStringBuilder sqlitedata;
         SQLiteConnection sql_connection;

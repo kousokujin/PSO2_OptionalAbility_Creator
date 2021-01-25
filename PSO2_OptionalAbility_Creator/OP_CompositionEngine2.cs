@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSO2_OptionalAbility_Creator
 {
-    class OP_CompositionEngine2
+    public class OP_CompositionEngine2
     {
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace PSO2_OptionalAbility_Creator
         {
             List<int> maxlevel = recipes.Select(x => x.Count).ToList();
             List<int> outputarr = selected;
-            maxlevel = maxlevel.Select(x => x - 1).ToList();
+            //maxlevel = maxlevel.Select(x => x - 1).ToList();
             int maxval = selected.Max();
 
             bool change = false;
@@ -298,7 +298,7 @@ namespace PSO2_OptionalAbility_Creator
             List<OP_Recipe2> returnrecipe = new List<OP_Recipe2>();
             foreach ((List<OP_Recipe2> u, int idx) in recipelist.Select((x, i) => (x, i)))
             {
-                returnrecipe.Add(u[idx]);
+                returnrecipe.Add(u[indexes[idx]]);
             }
 
             return returnrecipe;

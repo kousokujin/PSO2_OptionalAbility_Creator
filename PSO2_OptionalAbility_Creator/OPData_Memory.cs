@@ -7,7 +7,7 @@ using System.Data.SQLite;
 
 namespace PSO2_OptionalAbility_Creator
 {
-    class OPData_Memory : MemorySQL_Load, IOPContainer
+    public class OPData_Memory : MemorySQL_Load, IOPContainer
     {
 
         public List<op_stct2> op_lists;
