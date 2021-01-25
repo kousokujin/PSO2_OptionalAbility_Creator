@@ -304,6 +304,31 @@ namespace PSO2_OptionalAbility_Creator
             return returnrecipe;
         }
 
+        //ソール→ソール+ソールみたいなレシピかどうか
+        static public bool SimpleRecipe(List<OP_Recipe2> recipes)
+        {
+            if(recipes.Count == 1)
+            {
+                OP_Recipe2 temprecipe = recipes[0];
+                bool isDup = true;
+
+                foreach(op_stct2 o in temprecipe.materials)
+                {
+                    if(o.op_name != temprecipe.name.op_name)
+                    {
+                        isDup = false;
+                        break;
+                    }
+                }
+
+                return isDup;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         static public material SerchOP(op_stct2[] target, int percent_plus = 0, int camp_percent = 0)
         {
             List<List<OP_Recipe2>> recipes = GetMaterials(target.ToList(), percent_plus, camp_percent);
@@ -331,10 +356,10 @@ namespace PSO2_OptionalAbility_Creator
             bool loop = true;
             do
             {
-                List<OP_Recipe2> UseRecipe = createReciArray(recipes, UseRecipeIndexs);
+                List<OP_Recipe2> UseRecipe_temp = createReciArray(recipes, UseRecipeIndexs);
 
                 //干渉するOPの数の確認
-                List<OP_Recipe2> dup_recipe = CanMargeCheck(UseRecipe);
+                List<OP_Recipe2> dup_recipe = CanMargeCheck(UseRecipe_temp);
                 if(dup_recipe.Count > 0)
                 {
                     (bool next, List<int> idses) = SelectRecipe(recipes, UseRecipeIndexs);
@@ -349,7 +374,7 @@ namespace PSO2_OptionalAbility_Creator
                         {
                             material_op = new List<List<op_stct2>>(),
                             material_end = new List<List<op_stct2>>(),
-                            Recipes = UseRecipe,
+                            Recipes = UseRecipe_temp,
                             error = "NOT_RECIPE_MARGE",
                         };
 
@@ -361,6 +386,30 @@ namespace PSO2_OptionalAbility_Creator
                 }
 
             } while (loop == true);
+
+            List<OP_Recipe2> UseRecipe = createReciArray(recipes, UseRecipeIndexs);
+            
+            //ソール→ソール+ソールみたいなのだったら終わり
+            bool end = SimpleRecipe(UseRecipe);
+            if(end == true)
+            {
+                List<List<op_stct2>> opends = new List<List<op_stct2>>();
+                foreach(op_stct2 o in UseRecipe[0].materials)
+                {
+                    List<op_stct2> op_arr = new List<op_stct2>() { o };
+                    opends.Add(op_arr);
+                }
+
+                return new material()
+                {
+                    material_op = new List<List<op_stct2>>(),
+                    material_end = opends,
+                    Recipes = UseRecipe,
+                    error = ""
+                };
+
+            }
+
 
             //ここらへんまだ未完全
 
